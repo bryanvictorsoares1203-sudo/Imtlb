@@ -1,0 +1,3914 @@
+<!DOCTYPE html><html lang="en" style=""><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+    /* Controla a visibilidade do ícone de check nos upsells */
+    button[role=checkbox]>svg {
+        opacity: 0;
+        transition: opacity .2s ease-in-out
+    }
+
+    button[role=checkbox][data-state=checked]>svg {
+        opacity: 1
+    }
+</style>
+<style>
+    :root {
+            --sf-img-7: url("images/amazon-logo-white-VNp0Q8ky.png");
+    }
+
+    body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+</style>
+<!-- ========== OVERLAY INTRO ========== -->
+<style>
+  /* Overlay container — cobre tudo */
+  #intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    /* Mesmo background do site original */
+    background-image: url("images/bg-blue-metallic-CZPCpgVf.png");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #0d2268;
+  }
+
+  /* Mesmas smoke layers do original */
+  #intro-overlay .ov-smoke-1 { position: fixed; inset: 0; background: radial-gradient(ellipse 120% 60% at 50% -10%, rgba(30,80,220,0.35) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+  #intro-overlay .ov-smoke-2 { position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 20% 80%, rgba(10,40,160,0.3) 0%, transparent 55%); pointer-events: none; z-index: 0; }
+  #intro-overlay .ov-smoke-3 { position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 80% 80%, rgba(10,40,160,0.3) 0%, transparent 55%); pointer-events: none; z-index: 0; }
+
+  #ov-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 580px;
+    padding: 32px 16px 40px;
+  }
+
+  /* Card externo — igual ao .rounded-2xl.p-6.border do original */
+  #ov-outer-card {
+    border-radius: 1rem;
+    padding: 24px 24px 28px;
+    border: 1px solid rgba(255,255,255,0.30);
+    background-image: url("assets/bg-blue-gradient-9gld_wb0.png");
+    background-size: cover;
+    background-position: center center;
+  }
+
+  /* Logo */
+  #ov-logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  #ov-logo-wrap img {
+    height: 40px;
+  }
+  /* Placeholder logo */
+  .ov-logo-placeholder {
+    height: 40px;
+    width: 160px;
+    border: 1.5px dashed rgba(255,255,255,0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.35);
+    font-size: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* Badge — igual ao .bg-primary.glow-yellow-bg.rounded-full do original */
+  #ov-badge-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .ov-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: hsl(36 100% 50%);
+    border-radius: 9999px;
+    padding: 4px 16px;
+    box-shadow: 0 0 12px rgba(255,153,0,0.5), 0 0 24px rgba(255,153,0,0.25);
+  }
+  .ov-badge span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+  }
+  .ov-badge svg { color: #fff; flex-shrink: 0; }
+
+  /* Card interno texto — igual ao .animated-gradient do original */
+  .ov-inner-card {
+    background: linear-gradient(135deg,
+      rgba(30,65,185,0.75) 0%,
+      rgba(20,50,160,0.80) 40%,
+      rgba(15,40,140,0.75) 100%
+    );
+    border-radius: 0.75rem;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.30);
+    background-size: 200% 200%;
+  }
+
+  .ov-inner-card p {
+    color: hsl(0 0% 100%);
+    font-size: 14px;
+    line-height: 1.65;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .ov-text-primary {
+    color: hsl(36 100% 50%) !important;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(255,153,0,0.4);
+  }
+
+  /* Placeholder imagem produtos */
+  .ov-prod-placeholder {
+    width: 100%;
+    height: 115px;
+    margin-top: 14px;
+    border-radius: 0.5rem;
+    background: rgba(0,0,0,0.2);
+    border: 1.5px dashed rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.35);
+    font-size: 11px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* Card instruções */
+  .ov-steps-card h3 {
+    color: hsl(0 0% 100%);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    margin: 0 0 14px 0;
+  }
+  .ov-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ov-step-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ov-step-num {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 9999px;
+    background-color: hsl(36 100% 50%);
+    box-shadow: 0 0 8px rgba(255,153,0,0.45);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ov-step-row p {
+    color: hsl(210 15% 85%);
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+  }
+  .ov-step-note {
+    color: hsl(210 20% 65%);
+    font-size: 11px;
+    font-family: 'Poppins', sans-serif;
+    margin: 12px 0 0 0;
+  }
+
+  /* Botão — igual ao botão original */
+  .ov-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 0.75rem;
+    background-color: hsl(36 100% 50%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    cursor: pointer;
+    margin-top: 24px;
+    box-shadow: 0 0 15px rgba(255,153,0,0.5), 0 0 30px rgba(255,153,0,0.2);
+    animation: ovGlowPulse 2s ease-in-out infinite;
+    transition: filter 0.2s;
+    display: block;
+  }
+  .ov-btn:hover { filter: brightness(1.1); }
+
+  /* ===== TELA 2 ===== */
+  #ov-s2 { display: none; }
+  #ov-s2.ov-show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .ov-load-card {
+    width: 100%;
+    max-width: 400px;
+    background: linear-gradient(135deg,
+      rgba(30,65,185,0.75) 0%,
+      rgba(20,50,160,0.80) 40%,
+      rgba(15,40,140,0.75) 100%
+    );
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 1rem;
+    padding: 36px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  /* Logo tela 2 placeholder */
+  .ov-load-logo-placeholder {
+    height: 38px;
+    width: 150px;
+    border: 1.5px dashed rgba(255,255,255,0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.35);
+    font-size: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .ov-pbar-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .ov-pbar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, hsl(36 100% 50%), #ffbb44);
+    border-radius: 99px;
+    box-shadow: 0 0 10px rgba(255,153,0,0.55);
+  }
+
+  .ov-load-steps { width: 100%; display: flex; flex-direction: column; gap: 18px; }
+  .ov-lrow {
+    display: flex; align-items: center; gap: 14px;
+    opacity: 0.3; transition: opacity 0.4s;
+  }
+  .ov-lrow.ov-active { opacity: 1; }
+  .ov-lrow.ov-done  { opacity: 1; }
+
+  .ov-licon {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.35s;
+  }
+  .ov-lrow.ov-active .ov-licon {
+    border-color: hsl(36 100% 50%);
+    background: rgba(255,153,0,0.12);
+    box-shadow: 0 0 0 0 rgba(255,153,0,0.4);
+    animation: ovPulse 1s infinite;
+  }
+  .ov-lrow.ov-done .ov-licon {
+    background: hsl(36 100% 50%);
+    border-color: hsl(36 100% 50%);
+    animation: none;
+    box-shadow: 0 0 8px rgba(255,153,0,0.4);
+  }
+  .ov-lrow span {
+    font-size: 14px;
+    font-weight: 600;
+    color: hsl(0 0% 100%);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .ov-spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,153,0,0.25);
+    border-top-color: hsl(36 100% 50%);
+    border-radius: 50%;
+    animation: ovSpin 0.7s linear infinite;
+  }
+
+  /* Transições */
+  #ov-s1        { animation: ovFadeUp 0.45s ease; }
+  #ov-s1.ov-out { animation: ovFadeOut 0.32s ease forwards; pointer-events: none; }
+  #intro-overlay.ov-exit { animation: ovFadeOut2 0.5s ease forwards; pointer-events: none; }
+
+  @keyframes ovFadeUp    { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes ovFadeOut   { from { opacity:1; transform:translateY(0);    } to { opacity:0; transform:translateY(-12px); } }
+  @keyframes ovFadeOut2  { from { opacity:1; } to { opacity:0; } }
+  @keyframes ovPulse     { 0%,100%{box-shadow:0 0 0 0 rgba(255,153,0,0.4);} 50%{box-shadow:0 0 0 7px rgba(255,153,0,0);} }
+  @keyframes ovSpin      { to { transform: rotate(360deg); } }
+  @keyframes ovGlowPulse {
+    0%,100% { box-shadow: 0 0 15px rgba(255,153,0,0.5), 0 0 30px rgba(255,153,0,0.2); }
+    50%     { box-shadow: 0 0 20px rgba(255,153,0,0.7), 0 0 40px rgba(255,153,0,0.35); }
+  }
+</style>
+
+<!-- ========== CHECKOUT OVERLAY CSS ========== -->
+<style>
+  #checkout-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99998;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-image: url("images/bg-blue-metallic-CZPCpgVf.png");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #0d2268;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  #checkout-overlay.co-show { display: block; animation: coFadeIn .35s ease; }
+  #checkout-overlay.co-hide { animation: coFadeOut .3s ease forwards; }
+  #checkout-overlay .co-smoke { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  #checkout-overlay .co-smoke-1 { background: radial-gradient(ellipse 120% 60% at 50% -10%, rgba(30,80,220,0.35) 0%, transparent 60%); }
+  #checkout-overlay .co-smoke-2 { background: radial-gradient(ellipse 80% 50% at 20% 80%, rgba(10,40,160,0.3) 0%, transparent 55%); }
+  #checkout-overlay .co-smoke-3 { background: radial-gradient(ellipse 80% 50% at 80% 80%, rgba(10,40,160,0.3) 0%, transparent 55%); }
+  .co-inner { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 32px 16px 48px; }
+  .co-outer-card { width: 100%; max-width: 560px; border-radius: 1rem; padding: 24px; border: 1px solid rgba(255,255,255,0.30); background-image: url("assets/bg-blue-gradient-9gld_wb0.png"); background-size: cover; background-position: center center; }
+  .co-logo-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
+  .co-logo-wrap img { height: 40px; }
+  .co-logo-placeholder { height: 40px; width: 160px; border: 1.5px dashed rgba(255,255,255,0.25); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 10px; font-weight: 600; letter-spacing: .5px; }
+  .co-dark-card { background: linear-gradient(135deg, rgba(10,28,90,0.92) 0%, rgba(15,38,110,0.88) 50%, rgba(10,28,90,0.92) 100%); border-radius: 1rem; padding: 24px; border: 1px solid rgba(255,255,255,0.20); box-shadow: 0 25px 50px -12px rgba(0,0,0,.5); }
+  .co-back-btn { background: none; border: none; cursor: pointer; color: hsl(210 20% 65%); font-size: 12px; font-family: inherit; display: flex; align-items: center; gap: 4px; margin-bottom: 16px; padding: 0; transition: color .2s; }
+  .co-back-btn:hover { color: #fff; }
+  .co-title { font-size: 20px; font-weight: 700; color: hsl(0 0% 100%); text-align: center; margin: 0 0 4px 0; }
+  .co-subtitle { font-size: 13px; color: hsl(210 20% 65%); text-align: center; margin: 0 0 20px 0; }
+  .co-subtitle span { color: hsl(36 100% 50%); font-weight: 600; text-shadow: 0 0 8px rgba(255,153,0,0.4); }
+  .co-box-card { background: linear-gradient(135deg, rgba(30,65,185,0.6) 0%, rgba(20,50,160,0.65) 100%); border-radius: .75rem; padding: 24px 20px; border: 1px solid rgba(255,255,255,0.20); display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; }
+  .co-box-img { width: 160px; height: 140px; display: flex; align-items: center; justify-content: center; border: 1.5px dashed rgba(255,255,255,.2); border-radius: 8px; color: rgba(255,255,255,.3); font-size: 10px; font-weight: 600; letter-spacing: .5px; animation: coShake 1.5s ease-in-out infinite; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); }
+  .co-box-img img { width: 100%; height: 100%; object-fit: contain; }
+  .co-box-hint { color: rgba(255,255,255,0.5); font-size: 11px; font-style: italic; margin-top: 10px; }
+  .co-form-card { background: rgba(255,255,255,0.06); border-radius: .75rem; padding: 20px; border: 1px solid hsl(220 60% 30%); margin-bottom: 16px; }
+  .co-form-title { color: hsl(0 0% 100%); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin: 0 0 4px 0; }
+  .co-form-desc { color: hsl(210 20% 65%); font-size: 10px; margin: 0 0 16px 0; line-height: 1.5; }
+  .co-field { margin-bottom: 12px; }
+  .co-label { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.75); font-size: 11px; font-weight: 500; margin-bottom: 4px; }
+  .co-input { width: 100%; padding: 10px 12px; border-radius: .5rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: hsl(0 0% 100%); font-size: 13px; font-family: inherit; outline: none; transition: border-color .2s; box-sizing: border-box; }
+  .co-input::placeholder { color: rgba(255,255,255,0.3); }
+  .co-input:focus { border-color: hsl(36 100% 50%); }
+  .co-addr-header { display: flex; align-items: center; gap: 6px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.10); margin-top: 4px; margin-bottom: 12px; }
+  .co-addr-header svg { color: hsl(36 100% 50%); flex-shrink: 0; }
+  .co-addr-header span { color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 600; }
+  .co-cta-btn { width: 100%; padding: 16px; border-radius: .75rem; background-color: hsl(36 100% 50%); color: #fff; font-size: 15px; font-weight: 700; font-family: inherit; border: none; cursor: pointer; margin-bottom: 16px; box-shadow: 0 0 15px rgba(255,153,0,0.5), 0 0 30px rgba(255,153,0,0.2); animation: coGlowPulse 2s ease-in-out infinite; transition: filter .2s; position: relative; z-index: 10; }
+  .co-cta-btn:hover { filter: brightness(1.1); }
+  .co-cta-btn:disabled { opacity: .6; cursor: not-allowed; animation: none; }
+  .co-privacy-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: .75rem; padding: 16px; margin-bottom: 24px; }
+  .co-privacy-card p { color: hsl(210 20% 65%); font-size: 11px; margin: 0 0 10px 0; line-height: 1.5; }
+  .co-privacy-item { display: flex; align-items: center; gap: 8px; color: hsl(210 20% 65%); font-size: 11px; margin-bottom: 6px; }
+  .co-privacy-item svg { color: hsl(36 100% 50%); flex-shrink: 0; }
+  .co-faq-card { background: rgba(255,255,255,0.08); border-radius: .75rem; padding: 16px; border: 1px solid hsl(220 60% 30%); }
+  .co-faq-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .co-faq-header svg { color: hsl(36 100% 50%); }
+  .co-faq-header h4 { color: hsl(0 0% 100%); font-size: 14px; font-weight: 600; margin: 0; }
+  .co-faq-item { border-bottom: 1px solid rgba(255,255,255,0.10); }
+  .co-faq-item:last-child { border-bottom: none; }
+  .co-faq-btn { width: 100%; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: rgba(255,255,255,0.85); font-size: 11px; font-weight: 500; font-family: inherit; padding: 12px 0; text-align: left; gap: 8px; }
+  .co-faq-btn svg { flex-shrink: 0; color: rgba(255,255,255,0.5); transition: transform .2s; }
+  .co-faq-btn.open svg { transform: rotate(180deg); }
+  .co-faq-answer { display: none; color: hsl(210 20% 65%); font-size: 11px; line-height: 1.6; padding-bottom: 12px; }
+  .co-faq-answer.open { display: block; }
+  @keyframes coFadeIn  { from { opacity:0; } to { opacity:1; } }
+  @keyframes coFadeOut { from { opacity:1; } to { opacity:0; } }
+  @keyframes coShake { 0%,100%{transform:rotate(-1deg) translateY(0);} 25%{transform:rotate(1deg) translateY(-4px);} 75%{transform:rotate(-1deg) translateY(4px);} }
+  @keyframes coGlowPulse { 0%,100%{box-shadow:0 0 15px rgba(255,153,0,.5),0 0 30px rgba(255,153,0,.2);} 50%{box-shadow:0 0 22px rgba(255,153,0,.7),0 0 42px rgba(255,153,0,.35);} }
+  /* --- ESTILOS DO MODAL PIX --- */
+.pix-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    backdrop-filter: blur(6px);
+    font-family: 'Poppins', 'Inter', sans-serif;
+}
+.pix-modal-content {
+    background: linear-gradient(160deg, #0d2268 0%, #0a1855 60%, #071240 100%);
+    border: 1.5px solid rgba(255,255,255,0.18);
+    width: 100%;
+    max-width: 420px;
+    border-radius: 20px;
+    padding: 28px 24px 24px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    position: relative;
+    animation: pmFadeIn .3s ease;
+}
+@keyframes pmFadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.pix-modal-close {
+    display: none !important;
+}
+.pix-modal-title {
+    font-size: 19px; font-weight: 800;
+    color: #fff;
+    margin: 0 0 4px 0;
+}
+.pix-modal-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 16px 0;
+}
+.pix-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,153,0,0.12);
+    border: 1px solid rgba(255,153,0,0.35);
+    color: #FF9900;
+    font-size: 12px; font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+    letter-spacing: .3px;
+}
+.pix-qr-container {
+    background: #fff;
+    padding: 12px;
+    border-radius: 14px;
+    margin: 0 auto 16px;
+    width: fit-content;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.pix-qr-container img {
+    width: 190px; height: 190px;
+    display: block;
+}
+.pix-qr-loading {
+    width: 190px; height: 190px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+}
+.pix-qr-spinner {
+    width: 32px; height: 32px;
+    border: 3px solid rgba(255,153,0,0.2);
+    border-top-color: #FF9900;
+    border-radius: 50%;
+    animation: pmSpin .8s linear infinite;
+}
+@keyframes pmSpin { to{transform:rotate(360deg)} }
+.pix-timer-wrap {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    margin-bottom: 14px;
+}
+.pix-timer {
+    font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+}
+.pix-timer span { color: #FF9900; font-weight: 800; }
+.pix-copy-label {
+    font-size: 11px; font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase; letter-spacing: .6px;
+    margin-bottom: 6px;
+}
+.pix-copy-box {
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,153,0,0.3);
+    padding: 10px 14px;
+    font-size: 10.5px;
+    word-break: break-all;
+    border-radius: 10px;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 12px;
+    max-height: 68px;
+    overflow-y: auto;
+    text-align: left;
+    line-height: 1.5;
+    cursor: text;
+    user-select: all;
+}
+.pix-copy-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #FF9900, #e07e00);
+    color: #fff;
+    font-size: 15px; font-weight: 800;
+    font-family: inherit;
+    border: none; cursor: pointer;
+    box-shadow: 0 4px 18px rgba(255,153,0,0.45);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: filter .2s, transform .15s, background .3s, box-shadow .3s;
+    margin-bottom: 12px;
+}
+.pix-copy-btn:hover  { filter: brightness(1.1); }
+.pix-copy-btn:active { transform: scale(.98); }
+.pix-copy-btn.copied {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 4px 18px rgba(34,197,94,0.4);
+}
+.pix-waiting {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.35);
+}
+.pix-waiting-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #22c55e;
+    animation: pmPulse 1.4s ease-in-out infinite;
+}
+@keyframes pmPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+</style>
+
+
+  <!-- TikTok Pixel -->
+  <script type="text/javascript" async="" src="js/events.js"></script><script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;
+    var ttq=w[t]=w[t]||[];
+    ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+    ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+    for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+    ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+    ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;
+    ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=r;ttq._t=ttq._t||{};ttq._t[e]=+new Date;ttq._o=ttq._o||{};ttq._o[e]=n||{};
+    n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src=r+"?sdkid="+e+"&lib="+t;
+    e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    ttq.load('D6UBTSJC77U4GR00E9EG');
+    ttq.page();
+  }(window, document, 'ttq');
+
+  // Captura ttclid da URL e salva em cookie por 7 dias
+  (function() {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      var ttclid = p.get('ttclid') || p.get('tt_click_id') || '';
+      if (ttclid) {
+        var exp = new Date(Date.now() + 7 * 86400000).toUTCString();
+        document.cookie = 'tiktok_ttclid=' + encodeURIComponent(ttclid) + '; expires=' + exp + '; path=/';
+      }
+    } catch(e) {}
+  })();
+  </script>
+  <!-- Fim TikTok Pixel -->
+  
+  <!-- Kwai Tracker S2S (backend) -->
+  <script src="../js/app.js"></script>
+  
+      <script src="js/utm-handler.js" data-token="bbca7b66-5226-4401-ab54-4745017ff017">
+</script>
+</head>
+
+<body cz-shortcut-listen="true">
+<!-- ========== CHECKOUT OVERLAY ========== -->
+<div id="checkout-overlay">
+  <div class="co-smoke co-smoke-1"></div>
+  <div class="co-smoke co-smoke-2"></div>
+  <div class="co-smoke co-smoke-3"></div>
+  <div class="co-inner">
+    <div class="co-outer-card">
+      <div class="co-logo-wrap">
+        <img src="images/amazon-logo-white-VNp0Q8ky.png" alt="Amazon">
+      </div>
+      <div class="co-dark-card">
+        <button class="co-back-btn" onclick="coClose()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+          ← Voltar para os lotes
+        </button>
+        <h2 class="co-title">Abra sua caixa</h2>
+        <p class="co-subtitle" id="co-subtitle">Lote Bronze — <span id="co-total-price">R$ 30,00</span></p>
+        <div class="co-box-card">
+          <div class="co-box-img" id="co-box-img">
+            <img src="images/amazon-box-3d-DnLAnFoa.png" alt="Secret Pack">
+          </div>
+          <p class="co-box-hint">Confirme o pagamento para abrir...</p>
+        </div>
+        <div class="co-form-card">
+          <p class="co-form-title">Dados do Cliente</p>
+          <p class="co-form-desc">Pedimos apenas as informações essenciais para concluir sua compra com segurança.</p>
+          <div class="co-field">
+            <label class="co-label">Nome completo</label>
+            <input class="co-input" id="co-nome" type="text" placeholder="Seu nome completo" maxlength="100">
+          </div>
+          <div class="co-field">
+            <label class="co-label">Email</label>
+            <input class="co-input" id="co-email" type="email" placeholder="seuemail@exemplo.com" maxlength="255">
+          </div>
+          <div class="co-field">
+            <label class="co-label">
+              CPF
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:hsl(210 20% 65%)"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            </label>
+            <input class="co-input" id="co-cpf" type="text" placeholder="000.000.000-00" maxlength="14">
+          </div>
+          <div class="co-field">
+            <label class="co-label">Telefone</label>
+            <input class="co-input" id="co-telefone" type="tel" placeholder="(11) 99999-9999" maxlength="15">
+          </div>
+          <div class="co-addr-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Endereço de entrega</span>
+          </div>
+          <div class="co-field">
+            <label class="co-label">CEP</label>
+            <input class="co-input" id="co-cep" type="text" placeholder="00000-000" maxlength="9">
+          </div>
+          
+          <div class="co-field">
+            <label class="co-label">Rua / Avenida</label>
+            <input class="co-input" id="co-rua" type="text" placeholder="Nome da rua">
+          </div>
+          
+          <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+            <div style="flex: 1;">
+              <label class="co-label">Número</label>
+              <input class="co-input" id="co-numero" type="text" placeholder="123">
+            </div>
+            <div style="flex: 1;">
+              <label class="co-label">Complemento</label>
+              <input class="co-input" id="co-complemento" type="text" placeholder="Apto 12 (Opcional)">
+            </div>
+          </div>
+
+          <div class="co-field">
+            <label class="co-label">Bairro</label>
+            <input class="co-input" id="co-bairro" type="text" placeholder="Seu bairro">
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+            <div style="flex: 2;">
+              <label class="co-label">Cidade</label>
+              <input class="co-input" id="co-cidade" type="text" placeholder="Sua cidade">
+            </div>
+            <div style="flex: 1;">
+              <label class="co-label">Estado</label>
+              <input class="co-input" id="co-estado" type="text" placeholder="UF" maxlength="2">
+            </div>
+          </div>
+        </div>
+        <button class="co-cta-btn" id="co-abrir-btn" onclick="tiktokClickCTA(); coSubmit();">Abrir Caixa</button>
+        <div class="co-privacy-card">
+          <p>Seus dados serão armazenados conosco de maneira completamente segura, sendo utilizado somente para:</p>
+          <div class="co-privacy-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            <span>Envio de comprovante</span>
+          </div>
+          <div class="co-privacy-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            <span>Garantia de devolução em caso de insatisfação</span>
+          </div>
+          <div class="co-privacy-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            <span>Acompanhar o processo de sua compra</span>
+          </div>
+        </div>
+        <div class="co-faq-card">
+          <div class="co-faq-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+            <h4>Dúvidas Frequentes</h4>
+          </div>
+          <div id="co-faq-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var coCurrentLot = null;
+  var CO_FAQS = [
+    {q:'O que é o Amazon Open Now?',a:'É uma plataforma que permite comprar caixas com produtos lacrados de devolução ou sobra de estoque da Amazon a preços abaixo do mercado.'},
+    {q:'De onde vêm os produtos das caixas?',a:'Os produtos vêm diretamente do estoque de devoluções e sobras da Amazon, todos lacrados e em perfeito estado.'},
+    {q:'Que tipo de produtos posso ganhar?',a:'Eletrônicos como iPhones, MacBooks, TVs, Smartwatches, fones de ouvido e muito mais.'},
+    {q:'Eu descubro o que ganhei antes de receber em casa?',a:'Sim! Após confirmar o pagamento, você abre a caixa online e descobre os produtos na hora.'},
+    {q:'As caixas são lacradas?',a:'Sim, todos os produtos dentro das caixas são lacrados de fábrica.'},
+    {q:'Existe garantia nos produtos?',a:'Sim, todos os produtos possuem garantia do fabricante.'},
+    {q:'Posso escolher os produtos que vêm na caixa?',a:'Não, parte da experiência é a surpresa. Você escolhe o nível do lote e descobrirá os produtos ao abrir.'},
+    {q:'Qual a diferença entre os lotes Bronze, Prata e Ouro?',a:'Cada nível tem um valor diferente e quanto maior o nível, maior o valor potencial dos produtos dentro.'},
+    {q:'Quanto tempo leva para o pedido ser enviado?',a:'Após a confirmação do pagamento, o envio ocorre em até 2 dias úteis.'},
+    {q:'Posso comprar mais de uma caixa?',a:'Sim, você pode adquirir quantas caixas quiser!'},
+    {q:'As caixas são limitadas?',a:'Sim, os lotes são limitados e liberados em quantidades específicas.'},
+    {q:'Onde posso acompanhar meu pedido?',a:'Você receberá um email com o código de rastreamento assim que o pedido for despachado.'},
+  ];
+
+  function buildFaq() {
+    var list = document.getElementById('co-faq-list');
+    if (!list) return;
+    list.innerHTML = CO_FAQS.map(function(f,i) {
+      return '<div class="co-faq-item"><button class="co-faq-btn" onclick="coToggleFaq(this,'+i+')"><span>'+f.q+'</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="co-faq-answer" id="co-faq-a-'+i+'">'+f.a+'</div></div>';
+    }).join('');
+  }
+
+  window.coToggleFaq = function(btn,i) {
+    var ans = document.getElementById('co-faq-a-'+i);
+    var wasOpen = ans.classList.contains('open');
+    document.querySelectorAll('.co-faq-answer').forEach(function(a){a.classList.remove('open');});
+    document.querySelectorAll('.co-faq-btn').forEach(function(b){b.classList.remove('open');});
+    if (!wasOpen) { ans.classList.add('open'); btn.classList.add('open'); }
+  };
+
+  function maskCPF(v) {
+    v = v.replace(/[^0-9]/g,'').slice(0,11);
+    if (v.length > 9) return v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,'$1.$2.$3-$4');
+    if (v.length > 6) return v.replace(/(\d{3})(\d{3})(\d+)/,'$1.$2.$3');
+    if (v.length > 3) return v.replace(/(\d{3})(\d+)/,'$1.$2');
+    return v;
+  }
+  function maskPhone(v) {
+    v = v.replace(/[^0-9]/g,'').slice(0,11);
+    if (v.length === 11) return v.replace(/(\d{2})(\d{5})(\d{4})/,'($1) $2-$3');
+    if (v.length >= 10) return v.replace(/(\d{2})(\d{4})(\d{4})/,'($1) $2-$3');
+    if (v.length > 6) return v.replace(/(\d{2})(\d{4})(\d+)/,'($1) $2-$3');
+    if (v.length > 2) return v.replace(/(\d{2})(\d+)/,'($1) $2');
+    return v;
+  }
+  function maskCEP(v) {
+    v = v.replace(/[^0-9]/g,'').slice(0,8);
+    if (v.length > 5) return v.replace(/(\d{5})(\d+)/,'$1-$2');
+    return v;
+  }
+  function buscarCEP(cep) {
+    // Remove o hífen para enviar para a API
+    var cepLimpo = cep.replace(/\D/g, '');
+
+    if (cepLimpo.length === 8) {
+      // Feedback visual enquanto busca
+      document.getElementById('co-rua').value = 'Buscando...';
+      document.getElementById('co-bairro').value = 'Buscando...';
+      document.getElementById('co-cidade').value = 'Buscando...';
+      document.getElementById('co-estado').value = '...';
+
+      fetch('https://viacep.com.br/ws/' + cepLimpo + '/json/')
+        .then(res => res.json())
+        .then(dados => {
+          if (!dados.erro) {
+            // Preenche os campos com os dados da API
+            document.getElementById('co-rua').value = dados.logradouro;
+            document.getElementById('co-bairro').value = dados.bairro;
+            document.getElementById('co-cidade').value = dados.localidade;
+            document.getElementById('co-estado').value = dados.uf;
+            
+            // Foca automaticamente no campo de número para o cliente digitar
+            document.getElementById('co-numero').focus();
+          } else {
+            alert('CEP não encontrado. Por favor, verifique.');
+            limparEnderecos();
+          }
+        })
+        .catch(err => {
+          console.error('Erro na API de CEP:', err);
+          alert('Erro ao buscar o CEP. Digite manualmente.');
+          limparEnderecos();
+        });
+    }
+  }
+
+  function limparEnderecos() {
+    document.getElementById('co-rua').value = '';
+    document.getElementById('co-bairro').value = '';
+    document.getElementById('co-cidade').value = '';
+    document.getElementById('co-estado').value = '';
+  }
+
+  function formatPrice(v) { return 'R$ ' + v.toFixed(2).replace('.',','); }
+
+function setupMasks() {
+    var cpf = document.getElementById('co-cpf');
+    var tel = document.getElementById('co-telefone');
+    var cep = document.getElementById('co-cep');
+    
+    if (cpf && !cpf._masked) { cpf._masked=true; cpf.addEventListener('input',function(){this.value=maskCPF(this.value);}); }
+    if (tel && !tel._masked) { tel._masked=true; tel.addEventListener('input',function(){this.value=maskPhone(this.value);}); }
+    
+    if (cep && !cep._masked) { 
+      cep._masked=true; 
+      cep.addEventListener('input', function() {
+        this.value = maskCEP(this.value);
+        // Quando o CEP estiver completo com a máscara (9 caracteres), busca na API
+        if (this.value.length === 9) {
+          buscarCEP(this.value);
+        }
+      }); 
+    }
+  }
+
+  window.coOpen = function(lotName, price) {
+    coCurrentLot = {lotName:lotName, price:price};
+    var sub = document.getElementById('co-subtitle');
+    if (sub) sub.innerHTML = lotName + ' — <span id="co-total-price">' + formatPrice(price) + '</span>';
+    var ov = document.getElementById('checkout-overlay');
+    ov.scrollTop = 0;
+    ov.classList.remove('co-hide');
+    ov.classList.add('co-show');
+    document.body.style.overflow = 'hidden';
+    ov.style.overflowY = 'auto';
+    buildFaq();
+    setupMasks();
+  };
+
+  window.coClose = function() {
+    var ov = document.getElementById('checkout-overlay');
+    ov.classList.add('co-hide');
+    setTimeout(function() {
+      ov.classList.remove('co-show','co-hide');
+      document.body.style.overflow = '';
+    }, 300);
+  };
+
+window.coSubmit = async function() {
+    // 1. Captura os valores diretamente dos inputs pelo ID
+    const nomeEl     = document.getElementById('co-nome');
+    const emailEl    = document.getElementById('co-email');
+    const cpfEl      = document.getElementById('co-cpf');
+    const telefoneEl = document.getElementById('co-telefone');
+    const cepEl      = document.getElementById('co-cep');
+
+    const nome     = nomeEl     ? nomeEl.value.trim()     : '';
+    const email    = emailEl    ? emailEl.value.trim()    : '';
+    const cpf      = cpfEl      ? cpfEl.value.trim()      : '';
+    const telefone = telefoneEl ? telefoneEl.value.trim() : '';
+    const cep      = cepEl      ? cepEl.value.trim()      : '';
+
+    // Debug: confirmar que os valores foram capturados
+    console.log('[coSubmit] Campos capturados:', { nome, email, cpf, telefone, cep });
+
+    // 2. Validação com mensagens específicas
+    if (!nome || nome.length < 3) {
+        alert('Por favor, informe seu nome completo (mínimo 3 caracteres).');
+        if (nomeEl) nomeEl.focus();
+        return;
+    }
+    if (!email || !email.includes('@')) {
+        alert('Por favor, informe um e-mail válido.');
+        if (emailEl) emailEl.focus();
+        return;
+    }
+    if (!cpf || cpf.replace(/\D/g, '').length < 11) {
+        alert('Por favor, informe seu CPF completo.');
+        if (cpfEl) cpfEl.focus();
+        return;
+    }
+    if (!telefone || telefone.replace(/\D/g, '').length < 10) {
+        alert('Por favor, informe seu telefone com DDD.');
+        if (telefoneEl) telefoneEl.focus();
+        return;
+    }
+    if (!cep || cep.replace(/\D/g, '').length < 8) {
+        alert('Por favor, informe seu CEP.');
+        if (cepEl) cepEl.focus();
+        return;
+    }
+
+    // 3. Pega o valor de coCurrentLot (fonte da verdade) + recalcula upsells marcados
+    var _amountReais = 0;
+    if (window.coCurrentLot && window.coCurrentLot.price) {
+        _amountReais = window.coCurrentLot.price;
+    } else {
+        // Fallback: tenta ler do DOM
+        var _priceEl  = document.getElementById('co-total-price');
+        var _rawText  = _priceEl ? _priceEl.innerText : 'R$ 30,00';
+        _amountReais  = parseFloat(_rawText.replace('R$','').replace(/[.]/g,'').replace(',','.').trim());
+    }
+    const amountReais = _amountReais;
+    const amountCentavos = Math.round(amountReais * 100); // Converte para centavos
+    console.log('[coSubmit] Valor: R$', amountReais, '=', amountCentavos, 'centavos');
+
+    // Kwai: EventFormSubmit = preencheu/enviou o formulário
+    if (typeof window.kwaiTrackFormSubmit === 'function') window.kwaiTrackFormSubmit(amountReais);
+
+    // 4. Captura parâmetros UTM da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmParams = {
+        utm_source: urlParams.get('utm_source') || '',
+        utm_medium: urlParams.get('utm_medium') || '',
+        utm_campaign: urlParams.get('utm_campaign') || '',
+        utm_content: urlParams.get('utm_content') || '',
+        utm_term: urlParams.get('utm_term') || '',
+        xcod: urlParams.get('xcod') || '',
+        sck: urlParams.get('sck') || '',
+        src: urlParams.get('src') || '',
+        utm_id: urlParams.get('utm_id') || ''
+    };
+    console.log('[coSubmit] Parâmetros UTM:', utmParams);
+
+    // 5. Feedback no botão
+    const btnSubmit  = document.getElementById('co-abrir-btn');
+    const originalText = btnSubmit ? btnSubmit.innerText : 'Abrir Caixa';
+    if (btnSubmit) { btnSubmit.innerText = 'Processando...'; btnSubmit.disabled = true; }
+
+    try {
+        // 6. Payload no formato que pagamento-black.php espera
+        const payload = {
+            valor: amountCentavos,  // Valor em centavos
+            nome: nome,
+            email: email,
+            cpf: cpf.replace(/\D/g, ''),
+            telefone: telefone.replace(/\D/g, ''),
+            ...utmParams  // Espalha os parâmetros UTM no payload
+        };
+
+        console.log('[coSubmit] Enviando payload para pagamento-black.php:', JSON.stringify(payload));
+        
+        // TikTok Ads — InitiateCheckout (passa dados do cliente para enriquecimento)
+        tiktokInitiateCheckout(amountReais, window.coCurrentLot ? window.coCurrentLot.lotName : 'Secret Pack', {
+          email: email, phone: telefone, cpf: cpf.replace(/\D/g, '')
+        });
+
+        const response = await fetch('../checkout/pagamento.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        console.log('[coSubmit] Resposta pagamento-black.php:', data);
+
+        if (data.success) {
+            var pixPayload     = data.pixCopiaECola || data.pixCode || '';
+            var transactionId  = data.token || '';
+            var qrCodeUrl      = data.qrCodeUrl || '';
+
+            // Salva o ID globalmente para o polling usar
+            window._pixTransactionId = transactionId;
+
+            // Salva dados do cliente globalmente para usar no Purchase quando confirmado
+            window._pixCustomer = { email: email, phone: telefone, cpf: cpf.replace(/\D/g, '') };
+            window._pixAmount   = amountReais;
+            window._pixLotName  = window.coCurrentLot ? window.coCurrentLot.lotName : 'Secret Pack';
+
+            // Kwai: AddToCart = gerou PIX
+            if (typeof window.kwaiTrackAddToCart === 'function') window.kwaiTrackAddToCart(amountReais);
+
+            // Preenche código copia e cola
+            var codeEl = document.getElementById('pixCode');
+            if (codeEl) codeEl.innerText = pixPayload || 'Código indisponível';
+
+            // Exibe QR Code
+            var loadingEl = document.getElementById('pix-qr-loading');
+            var imgEl2    = document.getElementById('pix-qr-img');
+            if (loadingEl) loadingEl.style.display = 'none';
+            if (imgEl2) {
+                imgEl2.style.display = 'block';
+                imgEl2.src = qrCodeUrl || ('https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=' + encodeURIComponent(pixPayload));
+            }
+
+            // Abre modal
+            var modal = document.getElementById('pixModal');
+            if (modal) { modal.style.display = 'flex'; modal.style.zIndex = '999999'; history.pushState({ pixModalOpen: true }, '', window.location.href); }
+
+            // Reseta e inicia timer
+            var timerEl = document.querySelector('#timer');
+            if (timerEl) timerEl.textContent = '05:00';
+            startTimer(300, timerEl);
+
+            // Inicia polling de pagamento a cada 5 segundos
+            iniciarPollingPix(transactionId);
+        } else {
+            const errMsg = data.message || 'Erro desconhecido';
+            alert('Erro ao gerar PIX: ' + errMsg);
+            console.error('[coSubmit] Detalhes do erro:', data);
+        }
+    } catch (err) {
+        console.error('[coSubmit] Erro de conexão:', err);
+        alert('Erro de conexão com o servidor. Verifique o console (F12).');
+    } finally {
+        if (btnSubmit) { btnSubmit.innerText = originalText; btnSubmit.disabled = false; }
+    }
+};
+
+// Funções Auxiliares do Modal
+function gerarQRCode(pixCode) {
+    var imgEl     = document.getElementById('pix-qr-img');
+    var loadingEl = document.getElementById('pix-qr-loading');
+    if (!pixCode || !imgEl) return;
+    var encoded = encodeURIComponent(pixCode);
+    var qrUrl   = 'https://api.qrserver.com/v1/create-qr-code/?size=190x190&margin=0&data=' + encoded;
+    imgEl.onload = function() {
+        if (loadingEl) loadingEl.style.display = 'none';
+        imgEl.style.display = 'block';
+    };
+    imgEl.onerror = function() {
+        imgEl.src = 'https://chart.googleapis.com/chart?chs=190x190&cht=qr&chl=' + encoded;
+    };
+    imgEl.src = qrUrl;
+}
+
+function closePixModal() {
+    // Bloqueado — modal só fecha após confirmação do pagamento
+}
+
+// Bloqueia tecla Escape e botão voltar enquanto modal estiver aberto
+document.addEventListener('keydown', function(e) {
+    var modal = document.getElementById('pixModal');
+    if (modal && modal.style.display !== 'none') {
+        if (e.key === 'Escape' || e.keyCode === 27) {
+            e.preventDefault(); e.stopPropagation();
+        }
+    }
+}, true);
+
+// Bloqueia botão voltar do navegador enquanto modal aberto
+window.addEventListener('popstate', function(e) {
+    var modal = document.getElementById('pixModal');
+    if (modal && modal.style.display !== 'none') {
+        history.pushState(null, '', window.location.href);
+    }
+});
+
+// Bloqueia clique no overlay (fora do modal)
+document.addEventListener('DOMContentLoaded', function() {
+    var overlay = document.getElementById('pixModal');
+    if (overlay) {
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+});
+
+function copyPix() {
+    const codeEl = document.getElementById('pixCode');
+    const code   = codeEl ? codeEl.innerText.trim() : '';
+    if (!code || code === 'Gerando código...') return;
+
+    const btn = document.getElementById('pix-copy-btn');
+
+    function onCopiado() {
+        if (btn) {
+            btn.classList.add('copied');
+            btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copiado!';
+            setTimeout(function() {
+                btn.classList.remove('copied');
+                btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copiar Código PIX';
+            }, 2500);
+        }
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(onCopiado).catch(function() {
+            fallbackCopy(code); onCopiado();
+        });
+    } else {
+        fallbackCopy(code); onCopiado();
+    }
+}
+
+function fallbackCopy(text) {
+    var el = document.createElement('textarea');
+    el.value = text;
+    el.style.position = 'fixed';
+    el.style.top = '-9999px';
+    document.body.appendChild(el);
+    el.focus(); el.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(el);
+}
+
+function startTimer(duration, display) {
+    if (window._pixTimerInterval) clearInterval(window._pixTimerInterval);
+    var timer = duration;
+    window._pixTimerInterval = setInterval(function() {
+        var minutes = parseInt(timer / 60, 10);
+        var seconds = parseInt(timer % 60, 10);
+        if (display) display.textContent = (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+        if (--timer < 0) { clearInterval(window._pixTimerInterval); window._pixTimerInterval = null; }
+    }, 1000);
+}
+
+// Exportar funções do modal para escopo global
+window.copyPix       = copyPix;
+window.fallbackCopy  = fallbackCopy;
+window.closePixModal = closePixModal;
+window.gerarQRCode   = gerarQRCode;
+window.startTimer    = startTimer;
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var upsellMap = {
+      '8cefab1e-daea-24ad-5101-943dd81827a0':9.90,'8ebe0f6c-1d2f-0583-67fd-41f7af0419ee':19.90,'a0233793-0371-6aae-9316-b1f37d5f2334':29.90,
+      '068ab1e2-3427-1a93-9745-f5c6f645017a':9.90,'90886336-3e1d-6a9a-e01c-d50705dfb2d6':19.90,'81a937f3-c7d3-0b34-e070-92e3f6944566':29.90,
+      '6f4dac55-2322-5b69-c934-32d0a4285842':9.90,'79810aad-d7cc-5d82-1d43-d2ebc74c8c08':19.90,'5bd57b51-3b9a-5261-fdb6-de3f1ea9d735':29.90
+    };
+    var lotUpsells = {
+      'a23ff7ad-d172-7ca7-2708-fcb3cfd0538d':['8cefab1e-daea-24ad-5101-943dd81827a0','8ebe0f6c-1d2f-0583-67fd-41f7af0419ee','a0233793-0371-6aae-9316-b1f37d5f2334'],
+      'e2e58a6b-4a78-15c3-bae3-15bc0029bc86':['068ab1e2-3427-1a93-9745-f5c6f645017a','90886336-3e1d-6a9a-e01c-d50705dfb2d6','81a937f3-c7d3-0b34-e070-92e3f6944566'],
+      '9dd8628a-b54e-9ee2-aedd-7e7abb9181c2':['6f4dac55-2322-5b69-c934-32d0a4285842','79810aad-d7cc-5d82-1d43-d2ebc74c8c08','5bd57b51-3b9a-5261-fdb6-de3f1ea9d735']
+    };
+    var lotNames = {
+      'a23ff7ad-d172-7ca7-2708-fcb3cfd0538d':'Lote Bronze',
+      'e2e58a6b-4a78-15c3-bae3-15bc0029bc86':'Lote Prata',
+      '9dd8628a-b54e-9ee2-aedd-7e7abb9181c2':'Lote Ouro'
+    };
+    var lotBase = {
+      'a23ff7ad-d172-7ca7-2708-fcb3cfd0538d':30.00,
+      'e2e58a6b-4a78-15c3-bae3-15bc0029bc86':50.00,
+      '9dd8628a-b54e-9ee2-aedd-7e7abb9181c2':70.00
+    };
+
+    Object.keys(lotNames).forEach(function(lotId) {
+      var btn = document.getElementById(lotId);
+      if (!btn) return;
+      btn.addEventListener('click', function(e) {
+        e.stopImmediatePropagation();
+        var total = lotBase[lotId];
+        (lotUpsells[lotId]||[]).forEach(function(uid) {
+          var ub = document.getElementById(uid);
+          if (ub && ub.getAttribute('data-state')==='checked') total += (upsellMap[uid]||0);
+        });
+        coOpen(lotNames[lotId], total);
+      }, true);
+    });
+  });
+})();
+</script>
+<!-- ========== FIM CHECKOUT OVERLAY ========== -->
+<div id="intro-overlay">
+  <div class="ov-smoke-1"></div>
+  <div class="ov-smoke-2"></div>
+  <div class="ov-smoke-3"></div>
+
+  <!-- ===== TELA 1 ===== -->
+  <div id="ov-s1">
+    <div id="ov-content">
+      <div id="ov-outer-card">
+
+        <!-- Logo -->
+        <div id="ov-logo-wrap">
+               <img src="images/amazon-logo-white-VNp0Q8ky.png" alt="Amazon">
+        </div>
+
+        <!-- Badge Lote Liberado -->
+        <div id="ov-badge-wrap">
+          <div class="ov-badge">
+            <span>Lote Liberado</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Card texto + imagem produtos -->
+        <div class="ov-inner-card">
+          <p>Você acaba de liberar o acesso ao novo lote de caixas premiadas disponíveis. Os lotes contém apenas produtos lacrados de devolução ou sobra de estoque da Amazon: <span class="ov-text-primary">iPhones, MacBooks, TVs, Smartwatches entre outros eletrônicos premium.</span></p>
+               <img src="images/amazon-products-banner-DfaBOlNL.png" alt="Produtos Amazon" style="width:100%;border-radius:0.5rem;margin-top:14px">
+        </div>
+
+        <!-- Card instruções -->
+        <div class="ov-inner-card ov-steps-card">
+          <h3>Como funciona a partir de agora:</h3>
+          <div class="ov-steps-list">
+            <div class="ov-step-row">
+              <span class="ov-step-num">1</span>
+              <p>Você escolhe o nível da sua caixa</p>
+            </div>
+            <div class="ov-step-row">
+              <span class="ov-step-num">2</span>
+              <p>Confirma o pagamento</p>
+            </div>
+            <div class="ov-step-row">
+              <span class="ov-step-num">3</span>
+              <p>Abre a caixa online na hora</p>
+            </div>
+          </div>
+          <p class="ov-step-note">Em segundos, você vê exatamente quais produtos ganhou no lote.</p>
+        </div>
+
+        <!-- Botão -->
+        <button class="ov-btn" onclick="ovStart()">Continuar</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TELA 2 ===== -->
+  <div id="ov-s2">
+    <div style="width:100%;max-width:580px;padding:0 16px;">
+      <div class="ov-load-card">
+
+        <!-- Logo tela 2 -->
+             <img src="images/amazon-logo-white-VNp0Q8ky.png" alt="Amazon" style="height:38px"> 
+
+        <!-- Barra de progresso -->
+        <div style="width:100%">
+          <div class="ov-pbar-track">
+            <div class="ov-pbar-fill" id="ov-pfill"></div>
+          </div>
+        </div>
+
+        <!-- Itens -->
+        <div class="ov-load-steps">
+          <div class="ov-lrow ov-active" id="ov-r1">
+            <div class="ov-licon"><div class="ov-spinner"></div></div>
+            <span>Liberando seu acesso ao lote</span>
+          </div>
+          <div class="ov-lrow" id="ov-r2">
+            <div class="ov-licon"></div>
+            <span>Separando caixas disponíveis</span>
+          </div>
+          <div class="ov-lrow" id="ov-r3">
+            <div class="ov-licon"></div>
+            <span>Confirmando produtos devolvidos</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var CHECK = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  window.ovStart = function() {
+    var s1 = document.getElementById('ov-s1');
+    var s2 = document.getElementById('ov-s2');
+    s1.classList.add('ov-out');
+    setTimeout(function() {
+      s1.style.display = 'none';
+      s2.classList.add('ov-show');
+      ovRun();
+    }, 310);
+  };
+
+  function ovRun() {
+    var fill = document.getElementById('ov-pfill');
+    ovStep('ov-r1', 'active');
+    ovAnim(fill, 0, 33, 1000, function() {
+      ovStep('ov-r1', 'done');
+      ovStep('ov-r2', 'active');
+      ovAnim(fill, 33, 66, 1100, function() {
+        ovStep('ov-r2', 'done');
+        ovStep('ov-r3', 'active');
+        ovAnim(fill, 66, 100, 1200, function() {
+          ovStep('ov-r3', 'done');
+          setTimeout(function() {
+            var ov = document.getElementById('intro-overlay');
+            ov.classList.add('ov-exit');
+            setTimeout(function() { ov.remove(); }, 500);
+          }, 500);
+        });
+      });
+    });
+  }
+
+  function ovStep(id, state) {
+    var el = document.getElementById(id);
+    el.classList.remove('ov-active', 'ov-done');
+    var icon = el.querySelector('.ov-licon');
+    if (state === 'active') {
+      el.classList.add('ov-active');
+      icon.innerHTML = '<div class="ov-spinner"></div>';
+    } else if (state === 'done') {
+      el.classList.add('ov-done');
+      icon.innerHTML = CHECK;
+    } else {
+      icon.innerHTML = '';
+    }
+  }
+
+  function ovAnim(el, from, to, dur, cb) {
+    var start = performance.now();
+    (function loop(now) {
+      var t = Math.min((now - start) / dur, 1);
+      var e = t < .5 ? 2*t*t : -1+(4-2*t)*t;
+      el.style.width = (from + (to - from) * e) + '%';
+      if (t < 1) { requestAnimationFrame(loop); } else { cb && cb(); }
+    })(performance.now());
+  }
+})();
+</script>
+<!-- ========== FIM OVERLAY ========== -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Open Now</title>
+<meta name="description" content="Compre sua caixa e abra na mesma hora.">
+<meta name="author" content="Lovable">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/441c2050-bde4-40a5-9eca-f8d3f37a286f?Expires=1772338599&GoogleAccessId=go-api-on-aws%40gpt-engineer-390607.iam.gserviceaccount.com&Signature=mwWGV4sjw0IV5KJ77YkVk66NqPNANMWNhssklg%2BBz50KAFZqlWLy1G9qavT3KEV55nhmFiL1G2%2FXaWpSIXvjb1%2BAWguQoiM74pWevsn0CQOwWfw2pFCwm%2B6Bvo4zFmtShU9QVs459oA8wXT2wxPOqSlRiV%2BRJNBalJoF7Tivwr%2BkANTfsFq%2FM4oNK6XhtezvmIRyehuQnXiZ8ZjtTOWdWByc%2BVvJJemd2WM1Jq%2FY2V7P4SoSmYIGwVfIhjQY%2BnM0QMmQ%2FPmaLTwry2FYNk6AgSkgVn5iFHo6Tb3bZRr%2FRQI32MM%2BxpofQlYShUv1VEEelK5a5Ot7b7F1ga8%2FhzpI1Q%3D%3D">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@Lovable">
+<meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/441c2050-bde4-40a5-9eca-f8d3f37a286f?Expires=1772338599&GoogleAccessId=go-api-on-aws%40gpt-engineer-390607.iam.gserviceaccount.com&Signature=mwWGV4sjw0IV5KJ77YkVk66NqPNANMWNhssklg%2BBz50KAFZqlWLy1G9qavT3KEV55nhmFiL1G2%2FXaWpSIXvjb1%2BAWguQoiM74pWevsn0CQOwWfw2pFCwm%2B6Bvo4zFmtShU9QVs459oA8wXT2wxPOqSlRiV%2BRJNBalJoF7Tivwr%2BkANTfsFq%2FM4oNK6XhtezvmIRyehuQnXiZ8ZjtTOWdWByc%2BVvJJemd2WM1Jq%2FY2V7P4SoSmYIGwVfIhjQY%2BnM0QMmQ%2FPmaLTwry2FYNk6AgSkgVn5iFHo6Tb3bZRr%2FRQI32MM%2BxpofQlYShUv1VEEelK5a5Ot7b7F1ga8%2FhzpI1Q%3D%3D">
+<meta property="og:title" content="Amazon Open Now">
+<meta name="twitter:title" content="Amazon Open Now">
+<meta property="og:description" content="Compre sua caixa e abra na mesma hora.">
+<meta name="twitter:description" content="Compre sua caixa e abra na mesma hora.">
+<style>
+
+    body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    *,
+    :before,
+    :after {
+        --tw-border-spacing-x: 0;
+        --tw-border-spacing-y: 0;
+        --tw-translate-x: 0;
+        --tw-translate-y: 0;
+        --tw-rotate: 0;
+        --tw-skew-x: 0;
+        --tw-skew-y: 0;
+        --tw-scale-x: 1;
+        --tw-scale-y: 1;
+        --tw-pan-x: ;
+        --tw-pan-y: ;
+        --tw-pinch-zoom: ;
+        --tw-scroll-snap-strictness: proximity;
+        --tw-gradient-from-position: ;
+        --tw-gradient-via-position: ;
+        --tw-gradient-to-position: ;
+        --tw-ordinal: ;
+        --tw-slashed-zero: ;
+        --tw-numeric-figure: ;
+        --tw-numeric-spacing: ;
+        --tw-numeric-fraction: ;
+        --tw-ring-inset: ;
+        --tw-ring-offset-width: 0px;
+        --tw-ring-offset-color: #fff;
+        --tw-ring-color: rgb(59 130 246/.5);
+        --tw-ring-offset-shadow: 0 0#0000;
+        --tw-ring-shadow: 0 0#0000;
+        --tw-shadow: 0 0#0000;
+        --tw-shadow-colored: 0 0#0000;
+        --tw-blur: ;
+        --tw-brightness: ;
+        --tw-contrast: ;
+        --tw-grayscale: ;
+        --tw-hue-rotate: ;
+        --tw-invert: ;
+        --tw-saturate: ;
+        --tw-sepia: ;
+        --tw-drop-shadow: ;
+        --tw-backdrop-blur: ;
+        --tw-backdrop-brightness: ;
+        --tw-backdrop-contrast: ;
+        --tw-backdrop-grayscale: ;
+        --tw-backdrop-hue-rotate: ;
+        --tw-backdrop-invert: ;
+        --tw-backdrop-opacity: ;
+        --tw-backdrop-saturate: ;
+        --tw-backdrop-sepia: ;
+        --tw-contain-size: ;
+        --tw-contain-layout: ;
+        --tw-contain-paint: ;
+        --tw-contain-style:
+    }
+
+    ::backdrop {
+        --tw-border-spacing-x: 0;
+        --tw-border-spacing-y: 0;
+        --tw-translate-x: 0;
+        --tw-translate-y: 0;
+        --tw-rotate: 0;
+        --tw-skew-x: 0;
+        --tw-skew-y: 0;
+        --tw-scale-x: 1;
+        --tw-scale-y: 1;
+        --tw-pan-x: ;
+        --tw-pan-y: ;
+        --tw-pinch-zoom: ;
+        --tw-scroll-snap-strictness: proximity;
+        --tw-gradient-from-position: ;
+        --tw-gradient-via-position: ;
+        --tw-gradient-to-position: ;
+        --tw-ordinal: ;
+        --tw-slashed-zero: ;
+        --tw-numeric-figure: ;
+        --tw-numeric-spacing: ;
+        --tw-numeric-fraction: ;
+        --tw-ring-inset: ;
+        --tw-ring-offset-width: 0px;
+        --tw-ring-offset-color: #fff;
+        --tw-ring-color: rgb(59 130 246/.5);
+        --tw-ring-offset-shadow: 0 0#0000;
+        --tw-ring-shadow: 0 0#0000;
+        --tw-shadow: 0 0#0000;
+        --tw-shadow-colored: 0 0#0000;
+        --tw-blur: ;
+        --tw-brightness: ;
+        --tw-contrast: ;
+        --tw-grayscale: ;
+        --tw-hue-rotate: ;
+        --tw-invert: ;
+        --tw-saturate: ;
+        --tw-sepia: ;
+        --tw-drop-shadow: ;
+        --tw-backdrop-blur: ;
+        --tw-backdrop-brightness: ;
+        --tw-backdrop-contrast: ;
+        --tw-backdrop-grayscale: ;
+        --tw-backdrop-hue-rotate: ;
+        --tw-backdrop-invert: ;
+        --tw-backdrop-opacity: ;
+        --tw-backdrop-saturate: ;
+        --tw-backdrop-sepia: ;
+        --tw-contain-size: ;
+        --tw-contain-layout: ;
+        --tw-contain-paint: ;
+        --tw-contain-style:
+    }
+
+    *,
+    :before,
+    :after {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+        border-color: #e5e7eb
+    }
+
+    :before,
+    :after {
+        --tw-content: ""
+    }
+
+    html,
+    :host {
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        -webkit-tap-highlight-color: transparent
+    }
+
+    body {
+        margin: 0;
+        line-height: inherit
+    }
+
+    button {
+        font-family: inherit;
+        font-feature-settings: inherit;
+        font-variation-settings: inherit;
+        font-size: 100%;
+        font-weight: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+        color: inherit;
+        margin: 0;
+        padding: 0
+    }
+
+    button {
+        text-transform: none
+    }
+
+    button {
+        -webkit-appearance: button;
+        background-color: transparent;
+        background-image: none
+    }
+
+    :-moz-focusring {
+        outline: auto
+    }
+
+    :-moz-ui-invalid {
+        box-shadow: none
+    }
+
+    ::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+        height: auto
+    }
+
+    ::-webkit-search-decoration {
+        -webkit-appearance: none
+    }
+
+    ::-webkit-file-upload-button {
+        -webkit-appearance: button;
+        font: inherit
+    }
+
+    h2,
+    h3,
+    p {
+        margin: 0
+    }
+
+    ol,
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0
+    }
+
+    input::-moz-placeholder,
+    textarea::-moz-placeholder {
+        opacity: 1;
+        color: #9ca3af
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        opacity: 1;
+        color: #9ca3af
+    }
+
+    button {
+        cursor: pointer
+    }
+
+    :disabled {
+        cursor: default
+    }
+
+    img,
+    svg {
+        display: block;
+        vertical-align: middle
+    }
+
+    img {
+        max-width: 100%
+    }
+
+    :root {
+        --background: 220 90% 15%;
+        --foreground: 0 0% 100%;
+        --card: 220 80% 22%;
+        --card-foreground: 0 0% 100%;
+        --popover: 220 80% 22%;
+        --popover-foreground: 0 0% 100%;
+        --primary: 36 100% 50%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 220 70% 28%;
+        --secondary-foreground: 210 15% 85%;
+        --muted: 220 60% 25%;
+        --muted-foreground: 210 20% 65%;
+        --accent: 36 100% 50%;
+        --accent-foreground: 220 90% 15%;
+        --destructive: 0 72% 55%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 220 60% 30%;
+        --input: 220 60% 30%;
+        --ring: 36 100% 50%;
+        --radius: .75rem;
+        --sidebar-background: 220 90% 15%;
+        --sidebar-foreground: 0 0% 100%;
+        --sidebar-primary: 36 100% 50%;
+        --sidebar-primary-foreground: 0 0% 100%;
+        --sidebar-accent: 220 70% 28%;
+        --sidebar-accent-foreground: 210 15% 85%;
+        --sidebar-border: 220 60% 30%;
+        --sidebar-ring: 36 100% 50%
+    }
+
+    * {
+        border-color: hsl(var(--border))
+    }
+
+    body {
+        background-color: hsl(var(--background));
+        font-family: Inter, sans-serif;
+        color: hsl(var(--foreground));
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale
+    }
+
+    .pointer-events-none {
+        pointer-events: none
+    }
+
+    .fixed {
+        position: fixed
+    }
+
+    .absolute {
+        position: absolute
+    }
+
+    .relative {
+        position: relative
+    }
+
+    .-right-4 {
+        right: -1rem
+    }
+
+    .-right-8 {
+        right: -2rem
+    }
+
+    .top-0 {
+        top: 0
+    }
+
+    .top-1\/2 {
+        top: 50%
+    }
+
+    .z-10 {
+        z-index: 10
+    }
+
+    .z-\[100\] {
+        z-index: 100
+    }
+
+    .-m-12 {
+        margin: -3rem
+    }
+
+    .mx-auto {
+        margin-left: auto;
+        margin-right: auto
+    }
+
+    .mb-2 {
+        margin-bottom: .5rem
+    }
+
+    .mb-3 {
+        margin-bottom: .75rem
+    }
+
+    .mb-4 {
+        margin-bottom: 1rem
+    }
+
+    .mb-5 {
+        margin-bottom: 1.25rem
+    }
+
+    .mb-6 {
+        margin-bottom: 1.5rem
+    }
+
+    .mb-8 {
+        margin-bottom: 2rem
+    }
+
+    .mt-0\.5 {
+        margin-top: .125rem
+    }
+
+    .mt-1 {
+        margin-top: .25rem
+    }
+
+    .mt-3 {
+        margin-top: .75rem
+    }
+
+    .block {
+        display: block
+    }
+
+    .flex {
+        display: flex
+    }
+
+    .grid {
+        display: grid
+    }
+
+    .aspect-square {
+        aspect-ratio: 1/1
+    }
+
+    .h-10 {
+        height: 2.5rem
+    }
+
+    .h-4 {
+        height: 1rem
+    }
+
+    .h-5 {
+        height: 1.25rem
+    }
+
+    .h-6 {
+        height: 1.5rem
+    }
+
+    .h-7 {
+        height: 1.75rem
+    }
+
+    .h-\[320px\] {
+        height: 320px
+    }
+
+    .h-\[50px\] {
+        height: 50px
+    }
+
+    .h-\[90px\] {
+        height: 90px
+    }
+
+    .max-h-screen {
+        max-height: 100vh
+    }
+
+    .min-h-screen {
+        min-height: 100vh
+    }
+
+    .w-4 {
+        width: 1rem
+    }
+
+    .w-5 {
+        width: 1.25rem
+    }
+
+    .w-6 {
+        width: 1.5rem
+    }
+
+    .w-72 {
+        width: 18rem
+    }
+
+    .w-\[320px\] {
+        width: 320px
+    }
+
+    .w-fit {
+        width: fit-content
+    }
+
+    .w-full {
+        width: 100%
+    }
+
+    .min-w-0 {
+        min-width: 0px
+    }
+
+    .max-w-2xl {
+        max-width: 42rem
+    }
+
+    .max-w-4xl {
+        max-width: 56rem
+    }
+
+    .flex-1 {
+        flex: 1 1 0%
+    }
+
+    .flex-shrink-0,
+    .shrink-0 {
+        flex-shrink: 0
+    }
+
+    .-translate-y-1\/2 {
+        --tw-translate-y: -50%;
+        transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+    }
+
+    @keyframes ping {
+
+        75%,
+        to {
+            transform: scale(2);
+            opacity: 0
+        }
+    }
+
+    @keyframes pulse {
+        50% {
+            opacity: .5
+        }
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg)
+        }
+    }
+
+    .cursor-pointer {
+        cursor: pointer
+    }
+
+    .grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr))
+    }
+
+    .flex-col {
+        flex-direction: column
+    }
+
+    .flex-col-reverse {
+        flex-direction: column-reverse
+    }
+
+    .flex-wrap {
+        flex-wrap: wrap
+    }
+
+    .items-start {
+        align-items: flex-start
+    }
+
+    .items-center {
+        align-items: center
+    }
+
+    .justify-center {
+        justify-content: center
+    }
+
+    .justify-between {
+        justify-content: space-between
+    }
+
+    .gap-1 {
+        gap: .25rem
+    }
+
+    .gap-1\.5 {
+        gap: .375rem
+    }
+
+    .gap-2 {
+        gap: .5rem
+    }
+
+    .gap-3 {
+        gap: .75rem
+    }
+
+    .gap-4 {
+        gap: 1rem
+    }
+
+    .gap-5 {
+        gap: 1.25rem
+    }
+
+    .space-y-2>:not([hidden])~:not([hidden]) {
+        --tw-space-y-reverse: 0;
+        margin-top: calc(.5rem*calc(1 - var(--tw-space-y-reverse)));
+        margin-bottom: calc(.5rem*var(--tw-space-y-reverse))
+    }
+
+    .overflow-hidden {
+        overflow: hidden
+    }
+
+    .overflow-visible {
+        overflow: visible
+    }
+
+    .whitespace-nowrap {
+        white-space: nowrap
+    }
+
+    .rounded {
+        border-radius: .25rem
+    }
+
+    .rounded-2xl {
+        border-radius: 1rem
+    }
+
+    .rounded-full {
+        border-radius: 9999px
+    }
+
+    .rounded-lg {
+        border-radius: var(--radius)
+    }
+
+    .rounded-md {
+        border-radius: calc(var(--radius) - 2px)
+    }
+
+    .rounded-sm {
+        border-radius: calc(var(--radius) - 4px)
+    }
+
+    .rounded-xl {
+        border-radius: .75rem
+    }
+
+    .border {
+        border-width: 1px
+    }
+
+    .border-t {
+        border-top-width: 1px
+    }
+
+    .border-primary {
+        border-color: hsl(var(--primary))
+    }
+
+    .border-white\/10 {
+        border-color: #ffffff1a
+    }
+
+    .border-white\/15 {
+        border-color: #ffffff26
+    }
+
+    .border-white\/20 {
+        border-color: #fff3
+    }
+
+    .border-white\/30 {
+        border-color: #ffffff4d
+    }
+
+    .bg-black\/80 {
+        background-color: #000c
+    }
+
+    .bg-primary {
+        background-color: hsl(var(--primary))
+    }
+
+    .bg-white\/10 {
+        background-color: #ffffff1a
+    }
+
+    .bg-white\/15 {
+        background-color: #ffffff26
+    }
+
+    .bg-gradient-to-r {
+        background-image: linear-gradient(to right, var(--tw-gradient-stops))
+    }
+
+    .from-\[\#0a2ed4\] {
+        --tw-gradient-from: #0a2ed4 var(--tw-gradient-from-position);
+        --tw-gradient-to: rgb(10 46 212/0) var(--tw-gradient-to-position);
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to)
+    }
+
+    .from-\[\#5A5A6E\] {
+        --tw-gradient-from: #5A5A6E var(--tw-gradient-from-position);
+        --tw-gradient-to: rgb(90 90 110/0) var(--tw-gradient-to-position);
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to)
+    }
+
+    .from-\[\#8B6914\] {
+        --tw-gradient-from: #8B6914 var(--tw-gradient-from-position);
+        --tw-gradient-to: rgb(139 105 20/0) var(--tw-gradient-to-position);
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to)
+    }
+
+    .from-\[\#B8860B\] {
+        --tw-gradient-from: #B8860B var(--tw-gradient-from-position);
+        --tw-gradient-to: rgb(184 134 11/0) var(--tw-gradient-to-position);
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to)
+    }
+
+    .to-\[\#1a6ff5\] {
+        --tw-gradient-to: #1a6ff5 var(--tw-gradient-to-position)
+    }
+
+    .to-\[\#A8A9AD\] {
+        --tw-gradient-to: #A8A9AD var(--tw-gradient-to-position)
+    }
+
+    .to-\[\#CD7F32\] {
+        --tw-gradient-to: #CD7F32 var(--tw-gradient-to-position)
+    }
+
+    .to-\[\#FFD700\] {
+        --tw-gradient-to: #FFD700 var(--tw-gradient-to-position)
+    }
+
+    .fill-white {
+        fill: #fff
+    }
+
+    .object-contain {
+        -o-object-fit: contain;
+        object-fit: contain
+    }
+
+    .p-2 {
+        padding: .5rem
+    }
+
+    .p-4 {
+        padding: 1rem
+    }
+
+    .p-5 {
+        padding: 1.25rem
+    }
+
+    .p-6 {
+        padding: 1.5rem
+    }
+
+    .px-2 {
+        padding-left: .5rem;
+        padding-right: .5rem
+    }
+
+    .px-3 {
+        padding-left: .75rem;
+        padding-right: .75rem
+    }
+
+    .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem
+    }
+
+    .px-5 {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem
+    }
+
+    .py-0\.5 {
+        padding-top: .125rem;
+        padding-bottom: .125rem
+    }
+
+    .py-1 {
+        padding-top: .25rem;
+        padding-bottom: .25rem
+    }
+
+    .py-2 {
+        padding-top: .5rem;
+        padding-bottom: .5rem
+    }
+
+    .py-3 {
+        padding-top: .75rem;
+        padding-bottom: .75rem
+    }
+
+    .py-8 {
+        padding-top: 2rem;
+        padding-bottom: 2rem
+    }
+
+    .text-center {
+        text-align: center
+    }
+
+    .text-4xl {
+        font-size: 2.25rem;
+        line-height: 2.5rem
+    }
+
+    .text-\[10px\] {
+        font-size: 10px
+    }
+
+    .text-\[11px\] {
+        font-size: 11px
+    }
+
+    .text-\[9px\] {
+        font-size: 9px
+    }
+
+    .text-base {
+        font-size: 1rem;
+        line-height: 1.5rem
+    }
+
+    .text-sm {
+        font-size: .875rem;
+        line-height: 1.25rem
+    }
+
+    .text-xs {
+        font-size: .75rem;
+        line-height: 1rem
+    }
+
+    .font-bold {
+        font-weight: 700
+    }
+
+    .font-extrabold {
+        font-weight: 800
+    }
+
+    .font-medium {
+        font-weight: 500
+    }
+
+    .font-normal {
+        font-weight: 400
+    }
+
+    .font-semibold {
+        font-weight: 600
+    }
+
+    .uppercase {
+        text-transform: uppercase
+    }
+
+    .leading-relaxed {
+        line-height: 1.625
+    }
+
+    .leading-tight {
+        line-height: 1.25
+    }
+
+    .tracking-wide {
+        letter-spacing: .025em
+    }
+
+    .tracking-wider {
+        letter-spacing: .05em
+    }
+
+    .text-foreground {
+        color: hsl(var(--foreground))
+    }
+
+    .text-primary {
+        color: hsl(var(--primary))
+    }
+
+    .text-primary-foreground {
+        color: hsl(var(--primary-foreground))
+    }
+
+    .text-secondary-foreground {
+        color: hsl(var(--secondary-foreground))
+    }
+
+    .text-white {
+        --tw-text-opacity: 1;
+        color: rgb(255 255 255/var(--tw-text-opacity, 1))
+    }
+
+    .text-white\/40 {
+        color: #fff6
+    }
+
+    .text-white\/50 {
+        color: #ffffff80
+    }
+
+    .text-white\/60 {
+        color: #fff9
+    }
+
+    .text-white\/70 {
+        color: #ffffffb3
+    }
+
+    .text-white\/80 {
+        color: #fffc
+    }
+
+    .opacity-80 {
+        opacity: .8
+    }
+
+    .shadow-2xl {
+        --tw-shadow: 0 25px 50px -12px rgb(0 0 0/.25);
+        --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0#0000), var(--tw-ring-shadow, 0 0#0000), var(--tw-shadow)
+    }
+
+    .shadow-lg {
+        --tw-shadow: 0 10px 15px -3px rgb(0 0 0/.1), 0 4px 6px -4px rgb(0 0 0/.1);
+        --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0#0000), var(--tw-ring-shadow, 0 0#0000), var(--tw-shadow)
+    }
+
+    .shadow-md {
+        --tw-shadow: 0 4px 6px -1px rgb(0 0 0/.1), 0 2px 4px -2px rgb(0 0 0/.1);
+        --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0#0000), var(--tw-ring-shadow, 0 0#0000), var(--tw-shadow)
+    }
+
+    .shadow-xl {
+        --tw-shadow: 0 20px 25px -5px rgb(0 0 0/.1), 0 8px 10px -6px rgb(0 0 0/.1);
+        --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0#0000), var(--tw-ring-shadow, 0 0#0000), var(--tw-shadow)
+    }
+
+    .shadow-black\/30 {
+        --tw-shadow-color: rgb(0 0 0/.3);
+        --tw-shadow: var(--tw-shadow-colored)
+    }
+
+    .shadow-black\/40 {
+        --tw-shadow-color: rgb(0 0 0/.4);
+        --tw-shadow: var(--tw-shadow-colored)
+    }
+
+    .shadow-black\/50 {
+        --tw-shadow-color: rgb(0 0 0/.5);
+        --tw-shadow: var(--tw-shadow-colored)
+    }
+
+    .ring-offset-background {
+        --tw-ring-offset-color: hsl(var(--background))
+    }
+
+    .drop-shadow-lg {
+        --tw-drop-shadow: drop-shadow(0 10px 8px rgb(0 0 0/.04)) drop-shadow(0 4px 3px rgb(0 0 0/.1));
+        filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
+    }
+
+    .backdrop-blur-sm {
+        --tw-backdrop-blur: blur(4px);
+        -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+        backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)
+    }
+
+    .transition-all {
+        transition-property: all;
+        transition-timing-function: cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .duration-200 {
+        transition-duration: .2s
+    }
+
+    .duration-500 {
+        transition-duration: .5s
+    }
+
+    @keyframes enter {
+        0% {
+            opacity: var(--tw-enter-opacity, 1);
+            transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0))
+        }
+    }
+
+    @keyframes exit {
+        to {
+            opacity: var(--tw-exit-opacity, 1);
+            transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0))
+        }
+    }
+
+    .duration-200 {
+        animation-duration: .2s
+    }
+
+    .duration-500 {
+        animation-duration: .5s
+    }
+
+    .glow-yellow {
+        text-shadow: 0 0 5px hsl(var(--primary)/.35), 0 0 12px hsl(var(--primary)/.15)
+    }
+
+    .glow-yellow-bg {
+        box-shadow: 0 0 12px -2px hsl(var(--primary)/.5), 0 0 30px -5px hsl(var(--primary)/.25)
+    }
+
+    .glow-yellow-icon {
+        filter: drop-shadow(0 0 6px hsl(var(--primary)/.6))
+    }
+
+    @keyframes glow-pulse {
+
+        0%,
+        to {
+            box-shadow: 0 0 20px -5px #f906, 0 0 40px -10px #f903
+        }
+
+        50% {
+            box-shadow: 0 0 35px -5px #ff9900b3, 0 0 60px -10px #ff990059
+        }
+    }
+
+    .glow-pulse-cta {
+        animation: glow-pulse 2s ease-in-out infinite
+    }
+
+    @keyframes float {
+
+        0%,
+        to {
+            transform: translateY(0)
+        }
+
+        50% {
+            transform: translateY(-10px)
+        }
+    }
+
+    @keyframes shimmer-pulse {
+
+        0%,
+        to {
+            opacity: .15
+        }
+
+        50% {
+            opacity: 1
+        }
+    }
+
+    @keyframes sweep {
+        0% {
+            transform: translate(-100%, -100%)
+        }
+
+        to {
+            transform: translate(100%, 100%)
+        }
+    }
+
+    .animated-gradient:after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        bottom: -50%;
+        left: -50%;
+        border-radius: inherit;
+        background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, .06) 45%, rgba(255, 255, 255, .12) 50%, rgba(255, 255, 255, .06) 55%, transparent 100%);
+        animation: sweep 4s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0
+    }
+
+    .animated-gradient-dark:after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        bottom: -50%;
+        left: -50%;
+        border-radius: inherit;
+        background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, .04) 45%, rgba(255, 255, 255, .08) 50%, rgba(255, 255, 255, .04) 55%, transparent 100%);
+        animation: sweep 5s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0
+    }
+
+    .animated-gradient-shimmer {
+        background: linear-gradient(135deg, #0d3fc7, #1352f2 40%, #2a6cf5 60%, #1352f2);
+        position: relative
+    }
+
+    .animated-gradient-shimmer:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: inherit;
+        background: linear-gradient(135deg, #1b72ea, #2a6cf5, #1352f2);
+        animation: shimmer-pulse 1.5s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0
+    }
+
+    .animated-gradient-shimmer>* {
+        position: relative;
+        z-index: 1
+    }
+
+    .animated-gradient-dark-shimmer {
+        background: linear-gradient(135deg, #061f6b, #0a3abd 40%, #071e6a, #061f6b);
+        position: relative
+    }
+
+    .animated-gradient-dark-shimmer:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: inherit;
+        background: linear-gradient(135deg, #0b30a0, #1b5cf5, #0a3abd);
+        animation: shimmer-pulse 2s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0
+    }
+
+    :where(.animated-gradient-dark-shimmer>*) {
+        position: relative;
+        z-index: 1
+    }
+
+    @keyframes smoke-drift-1 {
+        0% {
+            transform: translate(-100%) scaleY(1);
+            opacity: .6
+        }
+
+        50% {
+            opacity: .85
+        }
+
+        to {
+            transform: translate(100%) scaleY(1.1);
+            opacity: .6
+        }
+    }
+
+    @keyframes smoke-drift-2 {
+        0% {
+            transform: translate(100%) scaleY(1.1);
+            opacity: .5
+        }
+
+        50% {
+            opacity: .75
+        }
+
+        to {
+            transform: translate(-100%) scaleY(1);
+            opacity: .5
+        }
+    }
+
+    @keyframes smoke-drift-3 {
+        0% {
+            transform: translate(-50%) scaleY(1);
+            opacity: .45
+        }
+
+        50% {
+            opacity: .7
+        }
+
+        to {
+            transform: translate(150%) scaleY(1.15);
+            opacity: .45
+        }
+    }
+
+    .smoke-layer-1,
+    .smoke-layer-2,
+    .smoke-layer-3 {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 1
+    }
+
+    .smoke-layer-1 {
+        background: radial-gradient(ellipse 80% 60%at 50% 50%, rgba(19, 82, 242, .55) 0%, transparent 70%);
+        filter: blur(35px);
+        animation: smoke-drift-1 12s ease-in-out infinite
+    }
+
+    .smoke-layer-2 {
+        background: radial-gradient(ellipse 90% 50%at 40% 60%, rgba(27, 114, 234, .45) 0%, transparent 65%);
+        filter: blur(45px);
+        animation: smoke-drift-2 16s ease-in-out infinite
+    }
+
+    .smoke-layer-3 {
+        background: radial-gradient(ellipse 70% 80%at 60% 40%, rgba(42, 108, 245, .4) 0%, transparent 60%);
+        filter: blur(50px);
+        animation: smoke-drift-3 20s ease-in-out infinite
+    }
+
+    @keyframes shake {
+
+        0%,
+        to {
+            transform: translate(0) rotate(0)
+        }
+
+        10% {
+            transform: translate(-1px, -1px) rotate(-1.5deg)
+        }
+
+        20% {
+            transform: translate(2px) rotate(1.5deg)
+        }
+
+        30% {
+            transform: translate(-1px, 1px) rotate(-.5deg)
+        }
+
+        40% {
+            transform: translate(1px, -1px) rotate(1deg)
+        }
+
+        50% {
+            transform: translate(-1px) rotate(-1deg)
+        }
+
+        60% {
+            transform: translate(1px, 1px) rotate(.5deg)
+        }
+
+        70% {
+            transform: translateY(-1px) rotate(-1.5deg)
+        }
+
+        80% {
+            transform: translate(-1px) rotate(1deg)
+        }
+
+        90% {
+            transform: translate(1px, 1px) rotate(-.5deg)
+        }
+    }
+
+    @keyframes explosion-ring {
+        0% {
+            transform: scale(0);
+            opacity: .9
+        }
+
+        60% {
+            opacity: .6
+        }
+
+        to {
+            transform: scale(3.5);
+            opacity: 0
+        }
+    }
+
+    @keyframes explosion-ring-2 {
+        0% {
+            transform: scale(0);
+            opacity: .7
+        }
+
+        50% {
+            opacity: .5
+        }
+
+        to {
+            transform: scale(4.5);
+            opacity: 0
+        }
+    }
+
+    @keyframes fire-glow {
+        0% {
+            transform: scale(.3);
+            opacity: 0
+        }
+
+        30% {
+            opacity: 1
+        }
+
+        70% {
+            opacity: .8
+        }
+
+        to {
+            transform: scale(2.5);
+            opacity: 0
+        }
+    }
+
+    @keyframes spark-up {
+        0% {
+            transform: translate(0) scale(1);
+            opacity: 1
+        }
+
+        to {
+            transform: translate(var(--sx), var(--sy)) scale(0);
+            opacity: 0
+        }
+    }
+
+    @keyframes light-beam {
+        0% {
+            transform: scaleY(0);
+            opacity: 0
+        }
+
+        30% {
+            opacity: .8
+        }
+
+        to {
+            transform: scaleY(1);
+            opacity: 0
+        }
+    }
+
+    .file\:border-0::file-selector-button {
+        border-width: 0px
+    }
+
+    .file\:bg-transparent::file-selector-button {
+        background-color: transparent
+    }
+
+    .file\:text-sm::file-selector-button {
+        font-size: .875rem;
+        line-height: 1.25rem
+    }
+
+    .file\:font-medium::file-selector-button {
+        font-weight: 500
+    }
+
+    .file\:text-foreground::file-selector-button {
+        color: hsl(var(--foreground))
+    }
+
+    .placeholder\:text-muted-foreground::-moz-placeholder {
+        color: hsl(var(--muted-foreground))
+    }
+
+    .placeholder\:text-muted-foreground::placeholder {
+        color: hsl(var(--muted-foreground))
+    }
+
+    .placeholder\:text-muted-foreground\/50::-moz-placeholder {
+        color: hsl(var(--muted-foreground)/.5)
+    }
+
+    .placeholder\:text-muted-foreground\/50::placeholder {
+        color: hsl(var(--muted-foreground)/.5)
+    }
+
+    .after\:absolute:after {
+        content: var(--tw-content);
+        position: absolute
+    }
+
+    .after\:-inset-2:after {
+        content: var(--tw-content);
+        top: -.5rem;
+        right: -.5rem;
+        bottom: -.5rem;
+        left: -.5rem
+    }
+
+    .after\:inset-y-0:after {
+        content: var(--tw-content);
+        top: 0;
+        bottom: 0
+    }
+
+    .after\:left-1\/2:after {
+        content: var(--tw-content);
+        left: 50%
+    }
+
+    .after\:w-1:after {
+        content: var(--tw-content);
+        width: .25rem
+    }
+
+    .after\:w-\[2px\]:after {
+        content: var(--tw-content);
+        width: 2px
+    }
+
+    .after\:-translate-x-1\/2:after {
+        content: var(--tw-content);
+        --tw-translate-x: -50%;
+        transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+    }
+
+    .focus-within\:relative:focus-within {
+        position: relative
+    }
+
+    .focus-within\:z-20:focus-within {
+        z-index: 20
+    }
+
+    .hover\:border-primary\/50:hover {
+        border-color: hsl(var(--primary)/.5)
+    }
+
+    .hover\:border-white:hover {
+        --tw-border-opacity: 1;
+        border-color: rgb(255 255 255/var(--tw-border-opacity, 1))
+    }
+
+    .hover\:border-white\/20:hover {
+        border-color: #fff3
+    }
+
+    .hover\:bg-accent:hover {
+        background-color: hsl(var(--accent))
+    }
+
+    .hover\:bg-destructive\/80:hover {
+        background-color: hsl(var(--destructive)/.8)
+    }
+
+    .hover\:bg-destructive\/90:hover {
+        background-color: hsl(var(--destructive)/.9)
+    }
+
+    .hover\:bg-muted:hover {
+        background-color: hsl(var(--muted))
+    }
+
+    .hover\:bg-muted\/50:hover {
+        background-color: hsl(var(--muted)/.5)
+    }
+
+    .hover\:bg-primary:hover {
+        background-color: hsl(var(--primary))
+    }
+
+    .hover\:bg-primary\/80:hover {
+        background-color: hsl(var(--primary)/.8)
+    }
+
+    .hover\:bg-primary\/90:hover {
+        background-color: hsl(var(--primary)/.9)
+    }
+
+    .hover\:bg-secondary:hover {
+        background-color: hsl(var(--secondary))
+    }
+
+    .hover\:bg-secondary\/80:hover {
+        background-color: hsl(var(--secondary)/.8)
+    }
+
+    .hover\:bg-sidebar-accent:hover {
+        background-color: hsl(var(--sidebar-accent))
+    }
+
+    .hover\:bg-white\/10:hover {
+        background-color: #ffffff1a
+    }
+
+    .hover\:bg-white\/15:hover {
+        background-color: #ffffff26
+    }
+
+    .hover\:bg-white\/20:hover {
+        background-color: #fff3
+    }
+
+    .hover\:text-accent-foreground:hover {
+        color: hsl(var(--accent-foreground))
+    }
+
+    .hover\:text-foreground:hover {
+        color: hsl(var(--foreground))
+    }
+
+    .hover\:text-muted-foreground:hover {
+        color: hsl(var(--muted-foreground))
+    }
+
+    .hover\:text-primary-foreground:hover {
+        color: hsl(var(--primary-foreground))
+    }
+
+    .hover\:text-primary\/90:hover {
+        color: hsl(var(--primary)/.9)
+    }
+
+    .hover\:text-sidebar-accent-foreground:hover {
+        color: hsl(var(--sidebar-accent-foreground))
+    }
+
+    .hover\:text-white\/90:hover {
+        color: #ffffffe6
+    }
+
+    .hover\:underline:hover {
+        text-decoration-line: underline
+    }
+
+    .hover\:no-underline:hover {
+        text-decoration-line: none
+    }
+
+    .hover\:opacity-100:hover {
+        opacity: 1
+    }
+
+    .hover\:shadow-\[0_0_0_1px_hsl\(var\(--sidebar-accent\)\)\]:hover {
+        --tw-shadow: 0 0 0 1px hsl(var(--sidebar-accent));
+        --tw-shadow-colored: 0 0 0 1px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0#0000), var(--tw-ring-shadow, 0 0#0000), var(--tw-shadow)
+    }
+
+    .hover\:brightness-110:hover {
+        --tw-brightness: brightness(1.1);
+        filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
+    }
+
+    .hover\:after\:bg-sidebar-border:hover:after {
+        content: var(--tw-content);
+        background-color: hsl(var(--sidebar-border))
+    }
+
+    .focus\:border-primary:focus {
+        border-color: hsl(var(--primary))
+    }
+
+    .focus\:bg-accent:focus {
+        background-color: hsl(var(--accent))
+    }
+
+    .focus\:bg-primary:focus {
+        background-color: hsl(var(--primary))
+    }
+
+    .focus\:text-accent-foreground:focus {
+        color: hsl(var(--accent-foreground))
+    }
+
+    .focus\:text-primary-foreground:focus {
+        color: hsl(var(--primary-foreground))
+    }
+
+    .focus\:opacity-100:focus {
+        opacity: 1
+    }
+
+    .focus\:outline-none:focus {
+        outline: 2px solid transparent;
+        outline-offset: 2px
+    }
+
+    .focus\:ring-1:focus {
+        --tw-ring-offset-shadow: var(--tw-ring-inset)0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+        --tw-ring-shadow: var(--tw-ring-inset)0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0#0000)
+    }
+
+    .focus\:ring-2:focus {
+        --tw-ring-offset-shadow: var(--tw-ring-inset)0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+        --tw-ring-shadow: var(--tw-ring-inset)0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0#0000)
+    }
+
+    .focus\:ring-primary:focus {
+        --tw-ring-color: hsl(var(--primary))
+    }
+
+    .focus\:ring-ring:focus {
+        --tw-ring-color: hsl(var(--ring))
+    }
+
+    .focus\:ring-offset-2:focus {
+        --tw-ring-offset-width: 2px
+    }
+
+    .focus-visible\:outline-none:focus-visible {
+        outline: 2px solid transparent;
+        outline-offset: 2px
+    }
+
+    .focus-visible\:ring-1:focus-visible {
+        --tw-ring-offset-shadow: var(--tw-ring-inset)0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+        --tw-ring-shadow: var(--tw-ring-inset)0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0#0000)
+    }
+
+    .focus-visible\:ring-2:focus-visible {
+        --tw-ring-offset-shadow: var(--tw-ring-inset)0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+        --tw-ring-shadow: var(--tw-ring-inset)0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0#0000)
+    }
+
+    .focus-visible\:ring-ring:focus-visible {
+        --tw-ring-color: hsl(var(--ring))
+    }
+
+    .focus-visible\:ring-sidebar-ring:focus-visible {
+        --tw-ring-color: hsl(var(--sidebar-ring))
+    }
+
+    .focus-visible\:ring-offset-1:focus-visible {
+        --tw-ring-offset-width: 1px
+    }
+
+    .focus-visible\:ring-offset-2:focus-visible {
+        --tw-ring-offset-width: 2px
+    }
+
+    .focus-visible\:ring-offset-background:focus-visible {
+        --tw-ring-offset-color: hsl(var(--background))
+    }
+
+    .active\:bg-sidebar-accent:active {
+        background-color: hsl(var(--sidebar-accent))
+    }
+
+    .active\:text-sidebar-accent-foreground:active {
+        color: hsl(var(--sidebar-accent-foreground))
+    }
+
+    .disabled\:pointer-events-none:disabled {
+        pointer-events: none
+    }
+
+    .disabled\:cursor-not-allowed:disabled {
+        cursor: not-allowed
+    }
+
+    .disabled\:opacity-40:disabled {
+        opacity: .4
+    }
+
+    .disabled\:opacity-50:disabled {
+        opacity: .5
+    }
+
+    .disabled\:opacity-60:disabled {
+        opacity: .6
+    }
+
+    .group\/menu-item:focus-within .group-focus-within\/menu-item\:opacity-100 {
+        opacity: 1
+    }
+
+    .group\/menu-item:hover .group-hover\/menu-item\:opacity-100,
+    .group:hover .group-hover\:opacity-100 {
+        opacity: 1
+    }
+
+    .group.destructive .group-\[\.destructive\]\:hover\:border-destructive\/30:hover {
+        border-color: hsl(var(--destructive)/.3)
+    }
+
+    .group.destructive .group-\[\.destructive\]\:hover\:bg-destructive:hover {
+        background-color: hsl(var(--destructive))
+    }
+
+    .group.destructive .group-\[\.destructive\]\:hover\:text-destructive-foreground:hover {
+        color: hsl(var(--destructive-foreground))
+    }
+
+    .group.destructive .group-\[\.destructive\]\:hover\:text-red-50:hover {
+        --tw-text-opacity: 1;
+        color: rgb(254 242 242/var(--tw-text-opacity, 1))
+    }
+
+    .group.destructive .group-\[\.destructive\]\:focus\:ring-destructive:focus {
+        --tw-ring-color: hsl(var(--destructive))
+    }
+
+    .group.destructive .group-\[\.destructive\]\:focus\:ring-red-400:focus {
+        --tw-ring-opacity: 1;
+        --tw-ring-color: rgb(248 113 113/var(--tw-ring-opacity, 1))
+    }
+
+    .group.destructive .group-\[\.destructive\]\:focus\:ring-offset-red-600:focus {
+        --tw-ring-offset-color: #dc2626
+    }
+
+    .peer\/menu-button:hover~.peer-hover\/menu-button\:text-sidebar-accent-foreground {
+        color: hsl(var(--sidebar-accent-foreground))
+    }
+
+    .peer:disabled~.peer-disabled\:cursor-not-allowed {
+        cursor: not-allowed
+    }
+
+    .peer:disabled~.peer-disabled\:opacity-70 {
+        opacity: .7
+    }
+
+    .has-\[\:disabled\]\:opacity-50:has(:disabled) {
+        opacity: .5
+    }
+
+    @keyframes accordion-up {
+        0% {
+            height: var(--radix-accordion-content-height)
+        }
+
+        to {
+            height: 0
+        }
+    }
+
+    @keyframes accordion-down {
+        0% {
+            height: 0
+        }
+
+        to {
+            height: var(--radix-accordion-content-height)
+        }
+    }
+
+    .data-\[panel-group-direction\=vertical\]\:after\:left-0[data-panel-group-direction=vertical]:after {
+        content: var(--tw-content);
+        left: 0
+    }
+
+    .data-\[panel-group-direction\=vertical\]\:after\:h-1[data-panel-group-direction=vertical]:after {
+        content: var(--tw-content);
+        height: .25rem
+    }
+
+    .data-\[panel-group-direction\=vertical\]\:after\:w-full[data-panel-group-direction=vertical]:after {
+        content: var(--tw-content);
+        width: 100%
+    }
+
+    .data-\[panel-group-direction\=vertical\]\:after\:-translate-y-1\/2[data-panel-group-direction=vertical]:after {
+        content: var(--tw-content);
+        --tw-translate-y: -50%;
+        transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+    }
+
+    .data-\[panel-group-direction\=vertical\]\:after\:translate-x-0[data-panel-group-direction=vertical]:after {
+        content: var(--tw-content);
+        --tw-translate-x: 0px;
+        transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+    }
+
+    .data-\[state\=open\]\:hover\:bg-sidebar-accent:hover[data-state=open] {
+        background-color: hsl(var(--sidebar-accent))
+    }
+
+    .data-\[state\=open\]\:hover\:text-sidebar-accent-foreground:hover[data-state=open] {
+        color: hsl(var(--sidebar-accent-foreground))
+    }
+
+    .group[data-collapsible=offcanvas] .group-data-\[collapsible\=offcanvas\]\:after\:left-full:after {
+        content: var(--tw-content);
+        left: 100%
+    }
+
+    .group[data-collapsible=offcanvas] .group-data-\[collapsible\=offcanvas\]\:hover\:bg-sidebar:hover {
+        background-color: hsl(var(--sidebar-background))
+    }
+
+    @media (min-width:640px) {
+        .sm\:bottom-0 {
+            bottom: 0
+        }
+
+        .sm\:right-0 {
+            right: 0
+        }
+
+        .sm\:top-auto {
+            top: auto
+        }
+
+        .sm\:flex-col {
+            flex-direction: column
+        }
+    }
+
+    @media (min-width:768px) {
+        .md\:max-w-\[420px\] {
+            max-width: 420px
+        }
+
+        .md\:grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr))
+        }
+
+        .md\:p-8 {
+            padding: 2rem
+        }
+
+        .md\:text-base {
+            font-size: 1rem;
+            line-height: 1.5rem
+        }
+
+        .after\:md\:hidden:after {
+            content: var(--tw-content);
+            display: none
+        }
+    }
+</style>
+<style>
+    :where([data-sonner-toast]:focus-visible) {
+        box-shadow: 0 4px 12px #0000001a, 0 0 0 2px #0003
+    }
+
+    :where([data-sonner-toast]) :where([data-button]):focus-visible {
+        box-shadow: 0 0 0 2px #0006
+    }
+
+    :where([data-sonner-toast]) :where([data-close-button]):focus-visible {
+        box-shadow: 0 4px 12px #0000001a, 0 0 0 2px #0003
+    }
+
+    :where([data-sonner-toast]):hover :where([data-close-button]):hover {
+        background: var(--gray2);
+        border-color: var(--gray5)
+    }
+
+    :where([data-sonner-toast][data-swiping="true"]):before {
+        content: "";
+        position: absolute;
+        left: -50%;
+        right: -50%;
+        height: 100%;
+        z-index: -1
+    }
+
+    :where([data-sonner-toast][data-y-position="top"][data-swiping="true"]):before {
+        bottom: 50%;
+        transform: scaleY(3) translateY(50%)
+    }
+
+    :where([data-sonner-toast][data-y-position="bottom"][data-swiping="true"]):before {
+        top: 50%;
+        transform: scaleY(3) translateY(-50%)
+    }
+
+    :where([data-sonner-toast][data-swiping="false"][data-removed="true"]):before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: scaleY(2)
+    }
+
+    :where([data-sonner-toast]):after {
+        content: "";
+        position: absolute;
+        left: 0;
+        height: calc(var(--gap) + 1px);
+        bottom: 100%;
+        width: 100%
+    }
+
+    :where([data-sonner-toast][data-removed="true"][data-front="false"]):before {
+        height: calc(var(--initial-height) + 20%)
+    }
+
+    @keyframes swipe-out-left {
+        0% {
+            transform: var(--y) translate(var(--swipe-amount-x));
+            opacity: 1
+        }
+
+        to {
+            transform: var(--y) translate(calc(var(--swipe-amount-x) - 100%));
+            opacity: 0
+        }
+    }
+
+    @keyframes swipe-out-right {
+        0% {
+            transform: var(--y) translate(var(--swipe-amount-x));
+            opacity: 1
+        }
+
+        to {
+            transform: var(--y) translate(calc(var(--swipe-amount-x) + 100%));
+            opacity: 0
+        }
+    }
+
+    @keyframes swipe-out-up {
+        0% {
+            transform: var(--y) translateY(var(--swipe-amount-y));
+            opacity: 1
+        }
+
+        to {
+            transform: var(--y) translateY(calc(var(--swipe-amount-y) - 100%));
+            opacity: 0
+        }
+    }
+
+    @keyframes swipe-out-down {
+        0% {
+            transform: var(--y) translateY(var(--swipe-amount-y));
+            opacity: 1
+        }
+
+        to {
+            transform: var(--y) translateY(calc(var(--swipe-amount-y) + 100%));
+            opacity: 0
+        }
+    }
+
+    [data-sonner-toaster][data-theme=dark] [data-sonner-toast] [data-close-button]:hover {
+        background: var(--normal-bg-hover);
+        border-color: var(--normal-border-hover)
+    }
+
+    @keyframes sonner-fade-in {
+        0% {
+            opacity: 0;
+            transform: scale(.8)
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1)
+        }
+    }
+
+    @keyframes sonner-fade-out {
+        0% {
+            opacity: 1;
+            transform: scale(1)
+        }
+
+        to {
+            opacity: 0;
+            transform: scale(.8)
+        }
+    }
+
+    @keyframes sonner-spin {
+        0% {
+            opacity: 1
+        }
+
+        to {
+            opacity: .15
+        }
+    }
+</style>
+
+
+
+    <div id="root">
+        <div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events:none">
+            <ol tabindex="-1" class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]">
+            </ol>
+        </div>
+        <section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section>
+        <div class="min-h-screen relative overflow-hidden" style="background-image: url('images/bg-blue-metallic-CZPCpgVf.png');">
+            <div class="smoke-layer-1"></div>
+            <div class="smoke-layer-2"></div>
+            <div class="smoke-layer-3"></div>
+            <div class="relative z-10">
+                <div class="min-h-screen flex items-center justify-center px-4 py-8">
+                    <div class="w-full max-w-4xl transition-all duration-500" style="opacity:1;transform:none">
+                        <div class="rounded-2xl p-6 md:p-8 border border-white/30" style="background-image: url('images/bg-blue-metallic-CZPCpgVf.png');">
+                            <div class="flex justify-center mb-6"><img src="images/amazon-logo-white-VNp0Q8ky.png" alt="Amazon" class="h-10">
+                            </div>
+                            <div style="opacity:1;transform:none">
+                                <div class="animated-gradient-dark-shimmer rounded-2xl p-6 border border-white/20 shadow-2xl shadow-black/50" style="opacity:1;transform:none">
+                                    <div class="bg-primary glow-yellow-bg rounded-full px-5 py-1 mb-4 w-fit mx-auto">
+                                        <h2 class="text-sm md:text-base font-bold text-primary-foreground text-center">
+                                            Escolha o lote e abra sua caixa</h2>
+                                    </div>
+                                    <div class="animated-gradient-shimmer rounded-xl p-5 mb-8 mx-auto w-full border border-white/30 shadow-md shadow-black/30">
+                                        <div class="flex flex-col items-start gap-3">
+                                            <div class="flex items-center gap-3 text-sm md:text-base text-foreground">
+                                                <span class="w-6 h-6 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package text-white">
+                                                        <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z">
+                                                        </path>
+                                                        <path d="M12 22V12"></path>
+                                                        <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"></path>
+                                                        <path d="m7.5 4.27 9 5.15"></path>
+                                                    </svg></span><span class="font-bold">Escolha o Lote</span></div>
+                                            <div class="flex items-center gap-3 text-sm md:text-base text-foreground">
+                                                <span class="w-6 h-6 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card text-white">
+                                                        <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                                                        <line x1="2" x2="22" y1="10" y2="10"></line>
+                                                    </svg></span><span class="font-bold">Confirme o pagamento</span></div>
+                                            <div class="flex items-center gap-3 text-sm md:text-base text-foreground">
+                                                <span class="w-6 h-6 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-open text-white">
+                                                        <path d="M12 22v-9"></path>
+                                                        <path d="M15.17 2.21a1.67 1.67 0 0 1 1.63 0L21 4.57a1.93 1.93 0 0 1 0 3.36L8.82 14.79a1.655 1.655 0 0 1-1.64 0L3 12.43a1.93 1.93 0 0 1 0-3.36z">
+                                                        </path>
+                                                        <path d="M20 13v3.87a2.06 2.06 0 0 1-1.11 1.83l-6 3.08a1.93 1.93 0 0 1-1.78 0l-6-3.08A2.06 2.06 0 0 1 4 16.87V13">
+                                                        </path>
+                                                        <path d="M21 12.43a1.93 1.93 0 0 0 0-3.36L8.83 2.2a1.64 1.64 0 0 0-1.63 0L3 4.57a1.93 1.93 0 0 0 0 3.36l12.18 6.86a1.636 1.636 0 0 0 1.63 0z">
+                                                        </path>
+                                                    </svg></span><span class="font-bold">Abra a caixa na hora</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="animated-gradient-shimmer rounded-xl p-5 flex flex-col relative border border-white/30 shadow-lg shadow-black/40">
+                                            <div class="flex items-center gap-2 mb-3 px-3 py-2 rounded-lg bg-gradient-to-r from-[#8B6914] to-[#CD7F32]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package text-white">
+                                                    <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z">
+                                                    </path>
+                                                    <path d="M12 22V12"></path>
+                                                    <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"></path>
+                                                    <path d="m7.5 4.27 9 5.15"></path>
+                                                </svg>
+                                                <div>
+                                                    <h3 class="text-white font-bold text-base">Lote Bronze</h3>
+                                                    <p class="text-white/70 font-normal text-xs">1 a 3 produtos</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-center mb-5 relative">
+                                                <div class="bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] rounded-xl p-2 border border-white/20 shadow-xl shadow-black/50 relative aspect-square w-72 flex items-center justify-center">
+                                                    <img src="images/amazon-pallet-boxes-CohXWM3J.png">                                                
+                                                </div>
+                                            </div>
+                                            <div class="mb-3"><span class="text-4xl text-primary glow-yellow" style="font-family:Poppins,sans-serif;font-weight:900">R$ 30,00</span>
+                                            </div>
+                                            <div class="mt-3 mb-6 w-full rounded-lg bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border border-white/30 flex items-center justify-between h-[50px] px-3 relative overflow-visible shadow-lg shadow-black/40">
+                                                <div><span class="text-white/70 text-[10px] block leading-tight">Principais</span><span class="text-white font-bold text-sm leading-tight">Prêmios</span>
+                                                </div><img src="images/kit-products-bronze-DO22zjM_.png" alt="Produtos Lote Bronze" class="absolute -right-4 top-1/2 -translate-y-1/2 h-[90px] object-contain drop-shadow-lg pointer-events-none">
+                                            </div>
+                                            <ul class="space-y-2 mb-6 flex-1">
+                                                <li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Entrega em até 48h</span>
+                                                </li><li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Pague e revele na hora</span>
+                                                </li><li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Rastreio + Envio imediato</span>
+                                            </li></ul>
+                                            <div class="mb-4">
+                                                <div class="flex items-center gap-2 mb-2"><span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap text-white fill-white glow-yellow-icon">
+                                                            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z">
+                                                            </path>
+                                                        </svg></span><span class="text-primary font-extrabold text-xs uppercase tracking-wide glow-yellow">Turbine
+                                                        sua caixa</span></div>
+                                                <div class="space-y-2">
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="8cefab1e-daea-24ad-5101-943dd81827a0"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Upgrade
+                                                                Premium</span><span class="text-white/50 text-[10px] block leading-tight">Garanta
+                                                                1 produto premium na sua caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            9,90</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="8ebe0f6c-1d2f-0583-67fd-41f7af0419ee"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Caixa
+                                                                em Dobro</span><span class="text-white/50 text-[10px] block leading-tight">Receba
+                                                                o dobro de produtos na caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            19,90</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="a0233793-0371-6aae-9316-b1f37d5f2334"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Apple
+                                                                Inside</span><span class="text-white/50 text-[10px] block leading-tight">Garanta
+                                                                1 produto Apple na caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            29,90</span>
+                                                    </div>
+                                                </div>
+                                            </div><button class="w-full py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm glow-pulse-cta transition-all duration-200 hover:brightness-110" id="a23ff7ad-d172-7ca7-2708-fcb3cfd0538d">Abrir Caixa</button>
+                                        </div>
+                                        <div class="animated-gradient-shimmer rounded-xl p-5 flex flex-col relative border border-white/30 shadow-lg shadow-black/40">
+                                            <div class="flex items-center gap-2 mb-3 px-3 py-2 rounded-lg bg-gradient-to-r from-[#5A5A6E] to-[#A8A9AD]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag text-white">
+                                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                                    <path d="M3 6h18"></path>
+                                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                                </svg>
+                                                <div>
+                                                    <h3 class="text-white font-bold text-base">Lote Prata</h3>
+                                                    <p class="text-white/70 font-normal text-xs">4 a 6 produtos</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-center mb-5 relative">
+                                                <div class="bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] rounded-xl p-2 border border-white/20 shadow-xl shadow-black/50 relative aspect-square w-72 flex items-center justify-center">
+                                                    <img src="images/amazon-pallet-boxes-CohXWM3J.png">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3"><span class="text-4xl text-primary glow-yellow" style="font-family:Poppins,sans-serif;font-weight:900">R$ 50,00</span>
+                                            </div>
+                                            <div class="mt-3 mb-6 w-full rounded-lg bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border border-white/30 flex items-center justify-between h-[50px] px-3 relative overflow-visible shadow-lg shadow-black/40">
+                                                <div><span class="text-white/70 text-[10px] block leading-tight">Principais</span><span class="text-white font-bold text-sm leading-tight">Prêmios</span>
+                                                </div><img src="images/kit-products-prata-DXKPqu0I.png" alt="Produtos Lote Prata" class="absolute -right-8 top-1/2 -translate-y-1/2 h-[90px] object-contain drop-shadow-lg pointer-events-none">
+                                            </div>
+                                            <ul class="space-y-2 mb-6 flex-1">
+                                                <li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Entrega em até 48h</span>
+                                                </li><li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Pague e revele na hora</span>
+                                                </li><li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Rastreio + Envio imediato</span>
+                                            </li></ul>
+                                            <div class="mb-4">
+                                                <div class="flex items-center gap-2 mb-2"><span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap text-white fill-white glow-yellow-icon">
+                                                            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z">
+                                                            </path>
+                                                        </svg></span><span class="text-primary font-extrabold text-xs uppercase tracking-wide glow-yellow">Turbine
+                                                        sua caixa</span></div>
+                                                <div class="space-y-2">
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="068ab1e2-3427-1a93-9745-f5c6f645017a"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Upgrade
+                                                                Premium</span><span class="text-white/50 text-[10px] block leading-tight">Garanta
+                                                                1 produto premium na sua caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            9,90</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="90886336-3e1d-6a9a-e01c-d50705dfb2d6"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Caixa
+                                                                em Dobro</span><span class="text-white/50 text-[10px] block leading-tight">Receba
+                                                                o dobro de produtos na caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            19,90</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="81a937f3-c7d3-0b34-e070-92e3f6944566"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Apple
+                                                                Inside</span><span class="text-white/50 text-[10px] block leading-tight">Garanta
+                                                                1 produto Apple na caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            29,90</span>
+                                                    </div>
+                                                </div>
+                                            </div><button class="w-full py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm glow-pulse-cta transition-all duration-200 hover:brightness-110" id="e2e58a6b-4a78-15c3-bae3-15bc0029bc86">Abrir Caixa</button>
+                                        </div>
+                                        <div class="animated-gradient-shimmer rounded-xl p-5 flex flex-col relative border border-white/30 shadow-lg shadow-black/40">
+                                            <div class="flex items-center gap-2 mb-3 px-3 py-2 rounded-lg bg-gradient-to-r from-[#B8860B] to-[#FFD700]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift text-white">
+                                                    <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+                                                    <path d="M12 8v13"></path>
+                                                    <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+                                                    <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5">
+                                                    </path>
+                                                </svg>
+                                                <div>
+                                                    <h3 class="text-white font-bold text-base">Lote Ouro</h3>
+                                                    <p class="text-white/70 font-normal text-xs">5 a 7 produtos</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-center mb-5 relative">
+                                                <div class="bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] rounded-xl p-2 border border-white/20 shadow-xl shadow-black/50 relative aspect-square w-72 flex items-center justify-center">
+                                                    <img src="images/amazon-pallet-boxes-CohXWM3J.png">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3"><span class="text-4xl text-primary glow-yellow" style="font-family:Poppins,sans-serif;font-weight:900">R$ 70,00</span>
+                                            </div>
+                                            <div class="mt-3 mb-6 w-full rounded-lg bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border border-white/30 flex items-center justify-between h-[50px] px-3 relative overflow-visible shadow-lg shadow-black/40">
+                                                <div><span class="text-white/70 text-[10px] block leading-tight">Principais</span><span class="text-white font-bold text-sm leading-tight">Prêmios</span>
+                                                </div><img src="images/kit-products-ouro-CzY32c74.png" alt="Produtos Lote Ouro" class="absolute -right-4 top-1/2 -translate-y-1/2 h-[90px] object-contain drop-shadow-lg pointer-events-none">
+                                            </div>
+                                            <ul class="space-y-2 mb-6 flex-1">
+                                                <li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Entrega em até 48h</span>
+                                                </li><li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Pague e revele na hora</span>
+                                                </li><li class="flex items-start gap-2 text-sm text-secondary-foreground">
+                                                    <span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-white">
+                                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                                            <path d="m9 11 3 3L22 4"></path>
+                                                        </svg></span><span>Rastreio + Envio imediato</span>
+                                            </li></ul>
+                                            <div class="mb-4">
+                                                <div class="flex items-center gap-2 mb-2"><span class="w-5 h-5 rounded-full bg-primary glow-yellow-bg flex items-center justify-center flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap text-white fill-white glow-yellow-icon">
+                                                            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z">
+                                                            </path>
+                                                        </svg></span><span class="text-primary font-extrabold text-xs uppercase tracking-wide glow-yellow">Turbine
+                                                        sua caixa</span></div>
+                                                <div class="space-y-2">
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="6f4dac55-2322-5b69-c934-32d0a4285842"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Upgrade
+                                                                Premium</span><span class="text-white/50 text-[10px] block leading-tight">Garanta
+                                                                1 produto premium na sua caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            9,90</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="79810aad-d7cc-5d82-1d43-d2ebc74c8c08"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Caixa
+                                                                em Dobro</span><span class="text-white/50 text-[10px] block leading-tight">Receba
+                                                                o dobro de produtos na caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            19,90</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all duration-200 shadow-md shadow-black/30 bg-gradient-to-r from-[#0a2ed4] to-[#1a6ff5] border-white/10 hover:border-white/20">
+                                                        <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background flex items-center justify-center data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none" id="5bd57b51-3b9a-5261-fdb6-de3f1ea9d735"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M20 6 9 17l-5-5"></path>
+                                                            </svg></button>
+                                                        <div class="flex-1 min-w-0"><span class="text-white text-xs font-semibold block leading-tight">Apple
+                                                                Inside</span><span class="text-white/50 text-[10px] block leading-tight">Garanta
+                                                                1 produto Apple na caixa</span></div><span class="text-primary font-bold text-xs whitespace-nowrap glow-yellow">R$
+                                                            29,90</span>
+                                                    </div>
+                                                </div>
+                                            </div><button class="w-full py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm glow-pulse-cta transition-all duration-200 hover:brightness-110" id="9dd8628a-b54e-9ee2-aedd-7e7abb9181c2">Abrir Caixa</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="bg-black/80 backdrop-blur-sm border-t border-white/10 text-white/70 text-xs py-8 px-4">
+                    <div class="max-w-2xl mx-auto flex flex-col items-center gap-5"><img src="images/amazon-logo-white-VNp0Q8ky.png" alt="Amazon" class="h-7 opacity-80">
+                        <div class="flex flex-wrap justify-center gap-1 text-white/60 text-[11px]"><span class="hover:text-white/90 cursor-pointer">Condições de Uso</span><span>|</span><span class="hover:text-white/90 cursor-pointer">Notificação de
+                                Privacidade</span><span>|</span><span class="hover:text-white/90 cursor-pointer">Cookies</span></div>
+                        <div class="text-center text-[11px] leading-relaxed text-white/50">
+                            <p>Av. Juscelino Kubitschek, 2041, Torre E, 18° andar - São Paulo CEP: 04543-011
+                            </p><p class="mt-1"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1978736c7d783478747863767759787478637677377a7674377b6b">[email protected]</a></p>
+                        </div>
+                        <div class="flex flex-col items-center gap-2"><span class="text-white/60 text-[10px] uppercase tracking-wider font-semibold">Formas de
+                                Pagamento</span>
+                            <div class="flex flex-wrap justify-center gap-1.5">
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">Visa
+                                </div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">Diners
+                                </div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">
+                                    Mastercard</div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">
+                                    Hipercard</div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">Aura
+                                </div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">Elo
+                                </div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">Amex
+                                </div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">
+                                    Discover</div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">Boleto
+                                </div>
+                                <div class="bg-white/15 rounded px-2 py-0.5 text-[9px] font-medium text-white/80">Pix
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center gap-2"><span class="text-white/60 text-[10px] uppercase tracking-wider font-semibold">Segurança</span>
+                            <div class="flex flex-wrap justify-center gap-2">
+                                <div class="bg-white/10 border border-white/15 rounded-md px-3 py-1 text-[10px] font-medium text-white/70">
+                                    Google Site Seguro</div>
+                                <div class="bg-white/10 border border-white/15 rounded-md px-3 py-1 text-[10px] font-medium text-white/70">
+                                    Reclame Aqui</div>
+                                <div class="bg-white/10 border border-white/15 rounded-md px-3 py-1 text-[10px] font-medium text-white/70">
+                                    Certificado SSL</div>
+                            </div>
+                        </div>
+                        <p class="text-white/40 text-[10px] text-center">© 2021-2026 Amazon Serviços de Varejo do Brasil
+                            Ltda / CNPJ 15.436.940/0001-03</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lots = [
+                {
+                    name: 'Lote Bronze',
+                    basePrice: 30.00,
+                    ctaButtonId: 'a23ff7ad-d172-7ca7-2708-fcb3cfd0538d',
+                    upsells: [
+                        { id: '8cefab1e-daea-24ad-5101-943dd81827a0', price: 9.90, name: 'Upgrade Premium' },
+                        { id: '8ebe0f6c-1d2f-0583-67fd-41f7af0419ee', price: 19.90, name: 'Caixa em Dobro' },
+                        { id: 'a0233793-0371-6aae-9316-b1f37d5f2334', price: 29.90, name: 'Apple Inside' }
+                    ]
+                },
+                {
+                    name: 'Lote Prata',
+                    basePrice: 50.00,
+                    ctaButtonId: 'e2e58a6b-4a78-15c3-bae3-15bc0029bc86',
+                    upsells: [
+                        { id: '068ab1e2-3427-1a93-9745-f5c6f645017a', price: 9.90, name: 'Upgrade Premium' },
+                        { id: '90886336-3e1d-6a9a-e01c-d50705dfb2d6', price: 19.90, name: 'Caixa em Dobro' },
+                        { id: '81a937f3-c7d3-0b34-e070-92e3f6944566', price: 29.90, name: 'Apple Inside' }
+                    ]
+                },
+                {
+                    name: 'Lote Ouro',
+                    basePrice: 70.00,
+                    ctaButtonId: '9dd8628a-b54e-9ee2-aedd-7e7abb9181c2',
+                    upsells: [
+                        { id: '6f4dac55-2322-5b69-c934-32d0a4285842', price: 9.90, name: 'Upgrade Premium' },
+                        { id: '79810aad-d7cc-5d82-1d43-d2ebc74c8c08', price: 19.90, name: 'Caixa em Dobro' },
+                        { id: '5bd57b51-3b9a-5261-fdb6-de3f1ea9d735', price: 29.90, name: 'Apple Inside' }
+                    ]
+                }
+            ];
+
+            lots.forEach(lot => {
+                const ctaBtn = document.getElementById(lot.ctaButtonId);
+                if (!ctaBtn) return;
+
+                // Encontra o container do card e o elemento de preço dentro dele
+                const cardContainer = ctaBtn.closest('.animated-gradient-shimmer');
+                const priceElement = cardContainer.querySelector('.text-4xl');
+
+                const updatePrice = () => {
+                    let currentTotal = lot.basePrice;
+                    lot.upsells.forEach(upsell => {
+                        const btn = document.getElementById(upsell.id);
+                        if (btn && btn.getAttribute('data-state') === 'checked') {
+                            currentTotal += upsell.price;
+                        }
+                    });
+                    priceElement.innerText = `R$ ${currentTotal.toFixed(2).replace('.', ',')}`;
+                };
+
+                // Adiciona eventos de clique nos upsells
+                lot.upsells.forEach(upsell => {
+                    const btn = document.getElementById(upsell.id);
+                    if (btn) {
+                        // O clique é no elemento pai (linha inteira) para facilitar a usabilidade
+                        const row = btn.parentElement;
+                        row.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const currentState = btn.getAttribute('data-state');
+                            const newState = currentState === 'checked' ? 'unchecked' : 'checked';
+                            btn.setAttribute('data-state', newState);
+                            btn.setAttribute('aria-checked', newState === 'checked');
+                            updatePrice();
+                        });
+                    }
+                });
+
+                // Evento do botão "Abrir Caixa"
+                ctaBtn.addEventListener('click', () => {
+                    let selectedUpsells = [];
+                    let finalPrice = lot.basePrice;
+
+                    lot.upsells.forEach(upsell => {
+                        const btn = document.getElementById(upsell.id);
+                        if (btn && btn.getAttribute('data-state') === 'checked') {
+                            finalPrice += upsell.price;
+                            selectedUpsells.push({ name: upsell.name, price: upsell.price });
+                        }
+                    });
+
+                    const checkoutData = {
+                        lotName: lot.name,
+                        basePrice: lot.basePrice,
+                        finalPrice: finalPrice,
+                        selectedUpsells: selectedUpsells
+                    };
+
+                    // Salva os dados e redireciona
+                    localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+                    window.location.href = getUrlWithUtm('checkout.html');
+                });
+            });
+        });
+    </script>
+    <div id="pixModal" class="pix-modal-overlay">
+  <div class="pix-modal-content">
+
+    <button class="pix-modal-close" onclick="closePixModal()">✕</button>
+
+    <h2 class="pix-modal-title">Aguardando Pagamento</h2>
+    <p class="pix-modal-subtitle">Escaneie o QR Code ou copie o código PIX abaixo</p>
+
+    <div style="display:flex;justify-content:center">
+      <div class="pix-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.06 11.57a4.5 4.5 0 0 0-3.18-1.32h-.06l-2.88-2.88a4.5 4.5 0 0 0-6.36 0l-.35.36 2.12 2.12.35-.36a1.5 1.5 0 0 1 2.12 0l2.88 2.88a1.5 1.5 0 0 1 0 2.12l-.35.36-2.12 2.12.35.36a4.5 4.5 0 0 0 6.36 0l2.88-2.88a4.5 4.5 0 0 0 0-6.37l-.35-.36-2.12 2.12.35.35a1.5 1.5 0 0 1 0 2.13z"></path></svg>
+        Pagamento via PIX
+      </div>
+    </div>
+
+    <div class="pix-qr-container">
+      <div class="pix-qr-loading" id="pix-qr-loading">
+        <div class="pix-qr-spinner"></div>
+        <span>Gerando QR Code...</span>
+      </div>
+      <img id="pix-qr-img" src="" alt="QR Code PIX" style="display:none;width:190px;height:190px;">
+    </div>
+
+    <div class="pix-timer-wrap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      <span class="pix-timer">Expira em: <span id="timer">05:00</span></span>
+    </div>
+
+    <p class="pix-copy-label">Código PIX — Copia e Cola</p>
+    <div class="pix-copy-box" id="pixCode">Gerando código...</div>
+
+    <button class="pix-copy-btn" id="pix-copy-btn" onclick="copyPix()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+      Copiar Código PIX
+    </button>
+
+    <div class="pix-waiting">
+      <div class="pix-waiting-dot"></div>
+      Aguardando confirmação do pagamento...
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// POLLING — Consulta pagamento PIX a cada 5 segundos
+// ══════════════════════════════════════════════════════
+window._pixPollingInterval = null;
+
+window.iniciarPollingPix = function(transactionId) {
+    if (window._pixPollingInterval) {
+        clearInterval(window._pixPollingInterval);
+        window._pixPollingInterval = null;
+    }
+    if (!transactionId) return;
+    console.log('[PIX Polling] Iniciando para ID:', transactionId);
+
+    window._pixPollingInterval = setInterval(function() {
+        fetch('../checkout/verificar.php?id=' + transactionId)
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                console.log('[PIX Polling] Resposta completa:', data);
+                console.log('[PIX Polling] Status:', data.status);
+                
+                // verificar-black.php retorna status como string: 'pending', 'paid', 'cancelled', etc
+                if (data.success && (data.status === 'paid' || data.status === 'PAID' || data.status === 'COMPLETED' || data.status === 'completed' || data.status === 'APPROVED' || data.status === 'approved')) {
+                    window.pararPollingPix();
+
+                    // ✅ Purchase disparado SOMENTE quando pagamento PIX confirmado
+                    var amount  = window._pixAmount  || 0;
+                    var lotName = window._pixLotName || 'Secret Pack';
+                    var customer = window._pixCustomer || {};
+
+                    tiktokPurchase(amount, lotName, customer);
+
+                    // Kwai Pixel - purchase
+                    if (typeof window.kwaiTrackPurchase === 'function') {
+                        window.kwaiTrackPurchase(amount);
+                    }
+
+                    console.log('[PIX] Pagamento confirmado — Purchase disparado para TikTok e Kwai');
+                    try {
+                        sessionStorage.setItem('_pixCustomer', JSON.stringify({
+                            name:   (window._pixCustomer && window._pixCustomer.name) ? window._pixCustomer.name : '',
+                            email:  window._pixCustomer ? window._pixCustomer.email : '',
+                            phone:  window._pixCustomer ? window._pixCustomer.phone : '',
+                            cpf:    window._pixCustomer ? window._pixCustomer.cpf : '',
+                            ttclid: (function(){ var p=new URLSearchParams(window.location.search); return p.get('ttclid')||p.get('TikTokClickID')||''; })()
+                        }));
+                    } catch(e) {}
+                    window.location.href = getUrlWithUtm('obrigado.html');
+                }
+            })
+            .catch(function(err) {
+                console.warn('[PIX Polling] Erro na consulta:', err);
+            });
+    }, 5000);
+};
+
+window.pararPollingPix = function() {
+    if (window._pixPollingInterval) {
+        clearInterval(window._pixPollingInterval);
+        window._pixPollingInterval = null;
+        console.log('[PIX Polling] Parado.');
+    }
+};
+</script>
+
+
+<!-- TikTok Ads — Funções -->
+<script>
+// Retorna o ttclid salvo em cookie
+function tiktokGetClickId() {
+  var v = '';
+  try {
+    document.cookie.split(';').forEach(function(p) {
+      var kv = p.trim().split('=');
+      if (kv[0] === 'tiktok_ttclid') v = decodeURIComponent(kv[1] || '');
+    });
+  } catch(e) {}
+  return v;
+}
+
+// Envia evento via PHP proxy (tiktok_event.php)
+function tiktokSendEvent(eventName, props, customerData) {
+  try {
+    var payload = JSON.stringify({
+      event_name: eventName,
+      ttclid:     tiktokGetClickId(),
+      properties: props     || {},
+      customer:   customerData || {}
+    });
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('tiktok_event.php', new Blob([payload], { type: 'application/json' }));
+    } else {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'tiktok_event.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(payload);
+    }
+    console.log('[TikTok] Evento enviado:', eventName, '| ttclid:', tiktokGetClickId() || 'n/a');
+  } catch(e) { console.warn('[TikTok] Erro ao enviar evento:', e); }
+}
+
+// Clique no CTA — ViewContent + AddToCart
+function tiktokClickCTA() {
+  try {
+    var lot = window.coCurrentLot ? window.coCurrentLot.lotName : 'Abrir Caixa';
+    if (typeof ttq !== 'undefined') {
+      ttq.track('ViewContent', { content_name: lot, currency: 'BRL', content_type: 'product' });
+      ttq.track('AddToCart',   { content_name: lot, currency: 'BRL', content_type: 'product' });
+    }
+    tiktokSendEvent('ViewContent', { content_name: lot, url: window.location.href });
+    tiktokSendEvent('AddToCart',   { content_name: lot, url: window.location.href });
+  } catch(e) { console.warn('[TikTok] Erro tiktokClickCTA:', e); }
+}
+
+// InitiateCheckout
+function tiktokInitiateCheckout(amount, lotName, customerData) {
+  try {
+    if (typeof ttq !== 'undefined') {
+      ttq.track('InitiateCheckout', { value: amount || 0, currency: 'BRL', content_name: lotName || 'Secret Pack', content_type: 'product' });
+    }
+    tiktokSendEvent('InitiateCheckout', {
+      value: amount || 0, currency: 'BRL', content_name: lotName || 'Secret Pack', url: window.location.href
+    }, customerData || {});
+  } catch(e) { console.warn('[TikTok] Erro tiktokInitiateCheckout:', e); }
+}
+
+// Purchase — chamado quando PIX é gerado com sucesso
+function tiktokPurchase(amount, lotName, customerData) {
+  try {
+    if (typeof ttq !== 'undefined') {
+      ttq.track('Purchase', { value: amount || 0, currency: 'BRL', content_name: lotName || 'Secret Pack', content_type: 'product' });
+    }
+    tiktokSendEvent('Purchase', {
+      value: amount || 0, currency: 'BRL', content_name: lotName || 'Secret Pack', url: window.location.href
+    }, customerData || {});
+    console.log('[TikTok] Purchase OK — R$' + amount);
+  } catch(e) { console.warn('[TikTok] Erro tiktokPurchase:', e); }
+}
+</script>
+<!-- Fim TikTok Ads Funções -->
+
+<!-- xTracky UTM Helper -->
+<script>
+function getUrlWithUtm(url) {
+  if (typeof window === 'undefined') return url;
+  var params = window.location.search;
+  if (!params) return url;
+  var separator = url.indexOf('?') !== -1 ? '&' : '?';
+  return url + separator + params.substring(1);
+}
+</script>
+<!-- Fim xTracky UTM Helper -->
+</body></html>
